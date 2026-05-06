@@ -85,7 +85,7 @@ def figure_caption(doc, text):
     return p
 
 def figure_placeholder(doc, label):
-    """Emulates [Figure X. ...] for diagrams that exist as separate images."""
+    """Backward-compat helper (used when image path missing)."""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(8)
@@ -94,6 +94,30 @@ def figure_placeholder(doc, label):
     r.font.size = Pt(11)
     r.font.italic = True
     r.font.color.rgb = RGBColor(0x80, 0x80, 0x80)
+    return p
+
+import os
+FIG_DIR = '/Users/yuxianglian/Documents/系统分析与设计/SAD_Project/figures'
+
+def figure_image(doc, filename, caption, *, width_inches=6.0):
+    """Embed PNG figure with centered caption."""
+    path = os.path.join(FIG_DIR, filename)
+    if not os.path.exists(path):
+        return figure_placeholder(doc, caption)
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(8)
+    p.paragraph_format.space_after = Pt(2)
+    run = p.add_run()
+    run.add_picture(path, width=Inches(width_inches))
+    # Caption
+    cap = doc.add_paragraph()
+    cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    cap.paragraph_format.space_after = Pt(10)
+    r = cap.add_run(caption)
+    r.font.size = Pt(10)
+    r.font.italic = True
+    r.font.color.rgb = RGBColor(0x60, 0x60, 0x60)
     return p
 
 def add_table(doc, headers, rows, col_widths=None, header_fill='1F497D'):
@@ -304,7 +328,8 @@ add_table(doc, ["Milestone", "Date", "Output"], [
 
 heading2(doc, "1.4 Feature overview (Mind-Map)")
 body(doc, "The mind-map below organizes the platform's features around five branches radiating from the central node 'Campus Resource Platform'. Each branch represents one cohesive user-facing flow.")
-figure_placeholder(doc, "Figure 1. Feature overview mind-map (rendered separately; central node 'Campus Resource Platform' with five branches: Search · Upload · Points · Admin · My Dashboard)")
+figure_image(doc, "fig1_mindmap.png",
+             "Figure 1. Feature overview mind-map", width_inches=6.5)
 body(doc, "Smart Search is the gateway through which most users first enter the platform. It exposes a keyword box plus four filter dimensions — course code, academic year, resource type, and minimum rating. Verified Upload is the source of content. Every contribution flows through metadata validation and (when needed) human review before becoming searchable.")
 body(doc, "The Points System bridges the gap left by static resources: it explicitly rewards contribution. Earning paths include upload-approved (+10), download-received (+2), and rating-received (+1, when the rating is four stars or higher). Spending paths include downloading another user's resource (-1, with three free daily downloads as a floor) and two redemption options. The Content Review module guarantees baseline quality. The My Dashboard tile lets every user see their points balance, transaction history, and contribution stats at a glance.")
 body(doc, "The connection between these modules is cyclical. A user searches, downloads, and rates a useful resource. The rating flows back into the relevance ranking and benefits future searchers. Another user uploads a file, earns points on approval, and may earn additional points each time the file is downloaded by others. Those points can then be spent on more downloads or saved for redemption. This positive feedback loop is the structural reason we believe the platform will sustain itself once the user base reaches critical mass.")
@@ -367,7 +392,9 @@ add_table(doc, ["Field", "Description"], [
 
 heading3(doc, "2.1.4 DFD")
 body(doc, "The Data Flow Diagram below shows how a search request flows through the platform.")
-figure_placeholder(doc, "Figure 2. DFD diagram of the smart academic resource retrieval system")
+figure_image(doc, "fig2_dfd_retrieval.png",
+             "Figure 2. DFD diagram of the smart academic resource retrieval system",
+             width_inches=6.5)
 body(doc, "The diagram captures four principal data flows. (1) The user submits a query containing keyword and optional filter parameters. (2) The system retrieves matching resource records from the Resources data store. (3) The system computes the composite relevance score for each match using download counts and average ratings drawn from the same data store, then returns the ranked results to the user. (4) When the user opens a result and clicks Download, a separate flow charges points (via the Points Ledger data store) and streams the file from object storage.")
 
 heading3(doc, "2.1.5 Demo")
@@ -416,7 +443,9 @@ add_table(doc, ["Field", "Description"], [
 ], col_widths=[1.6, 5.0])
 
 heading3(doc, "2.2.4 DFD")
-figure_placeholder(doc, "Figure 3. DFD diagram of the points and rewards system")
+figure_image(doc, "fig3_dfd_points.png",
+             "Figure 3. DFD diagram of the points and rewards system",
+             width_inches=6.5)
 body(doc, "The diagram traces three principal data flows. (1) An action event (upload approved, download received, rating received, or download spent) arrives at the Points Engine process. (2) The Points Engine reads the user's current balance from the Users data store under a row-level lock, applies the configured delta, and writes both the updated balance and an audit entry to the PointRecord data store within a single database transaction. (3) The new balance is returned to the user interface for display, and any side-effect (download credit increment, pin activation, leaderboard recomputation) is dispatched.")
 
 heading3(doc, "2.2.5 Demo")
@@ -454,7 +483,9 @@ add_table(doc, ["Field", "Description"], [
 
 heading3(doc, "3.1.3 DFD")
 body(doc, "Version 2.0 DFD extends the v1.0 retrieval model. User history, resource metadata, and ratings data are fed into the recommendation module. The recommendation module generates a ranked recommendation list and feeds the user's responses (clicks, downloads, dismissals) back into the history database to refine future recommendations.")
-figure_placeholder(doc, "Figure 4. DFD diagram of the v2.0 AI-assisted recommendation system")
+figure_image(doc, "fig4_dfd_recommendation.png",
+             "Figure 4. DFD diagram of the v2.0 AI-assisted recommendation system",
+             width_inches=6.5)
 
 heading3(doc, "3.1.4 Future interface design")
 body(doc, "Version 2.0 will introduce recommendation cards on the home page and on the resource detail page. Each recommendation card carries a short explanation: 'similar course', 'highly rated', 'saved by students in your major', or 'helpful before final exams'. Including a brief explanation is essential because students need to understand why a particular file is being recommended before they will trust it.")

@@ -50,3 +50,6 @@ Final_Presentation.html
 resources/
 backend/storage/
 ppt_assets/
+
+# Generated diagrams (rebuilt from gen_figures.py)
+figures/

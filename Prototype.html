@@ -1044,6 +1044,124 @@ body {
   .form-grid-2 { grid-template-columns: 1fr; }
   .hero { grid-template-columns: 1fr; }
   .result-item { grid-template-columns: 1fr; }
+  .admin-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============ ADMIN DASHBOARD ============ */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.stat-tile {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px 12px;
+  text-align: center;
+  transition: border-color .12s;
+}
+.stat-tile:hover { border-color: #1f2937; }
+.stat-tile-num {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+  font-feature-settings: 'tnum';
+}
+.stat-tile-lbl {
+  font-size: 10px;
+  color: #6b7280;
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+.admin-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.admin-tab {
+  padding: 10px 18px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+  transition: color .12s, border-color .12s;
+}
+.admin-tab:hover { color: #111827; }
+.admin-tab.active {
+  color: #111827;
+  border-bottom-color: #111827;
+  font-weight: 600;
+}
+.admin-panel { padding: 0; overflow: hidden; }
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.admin-table th {
+  background: #f9fafb;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+.admin-table th.num,
+.admin-table td.num {
+  text-align: right;
+  font-feature-settings: 'tnum';
+}
+.admin-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #111827;
+}
+.admin-table tbody tr:hover td {
+  background: #f9fafb;
+}
+.delta-pos { color: #059669; }
+.delta-neg { color: #dc2626; }
+.delta-zero { color: #6b7280; }
+.badge-admin {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.status-pill {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.status-pub { background: #d1fae5; color: #065f46; }
+.status-pen { background: #fef3c7; color: #92400e; }
+.status-rej { background: #fee2e2; color: #7f1d1d; }
+.action-tag {
+  background: #eef2ff;
+  color: #3730a3;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  font-family: 'SF Mono', 'Monaco', monospace;
 }
 </style>
 </head>
@@ -1470,14 +1588,26 @@ body {
     <!-- ============ ADMIN PAGE ============ -->
     <section class="page" id="page-admin">
       <div class="page-head">
-        <h1 class="page-title">管理员审核</h1>
-        <p class="page-subtitle">审批待审核的上传资源（管理员专用）</p>
+        <h1 class="page-title">管理后台</h1>
+        <p class="page-subtitle">Admin Dashboard · 用户 / 资源 / 积分流水 / 审核队列</p>
       </div>
-      <div class="panel">
-        <div class="panel-head">
-          <span class="title-with-icon"><i data-lucide="list-checks"></i>待审核队列</span>
-        </div>
-        <div id="admin-queue"></div>
+
+      <!-- Summary stat tiles -->
+      <div class="admin-stats" id="admin-stats">
+        <div class="stat-tile"><div class="stat-tile-num">—</div><div class="stat-tile-lbl">Loading...</div></div>
+      </div>
+
+      <!-- Tab nav -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="users" onclick="showAdminTab('users')">Users</button>
+        <button class="admin-tab" data-tab="resources" onclick="showAdminTab('resources')">Resources</button>
+        <button class="admin-tab" data-tab="points" onclick="showAdminTab('points')">Points Ledger</button>
+        <button class="admin-tab" data-tab="queue" onclick="showAdminTab('queue')">Review Queue</button>
+      </div>
+
+      <!-- Tab content -->
+      <div class="panel admin-panel">
+        <div id="admin-content"><p style="padding:20px; opacity:.6">加载中...</p></div>
       </div>
     </section>
 
@@ -2041,40 +2171,140 @@ async function loadProfile() {
 }
 
 // ============================================================
-// ADMIN
+// ADMIN DASHBOARD
 // ============================================================
+let currentAdminTab = "users";
+
 async function loadAdmin() {
   try {
-    const queue = await api("/api/admin/queue");
-    const div = document.getElementById("admin-queue");
-    if (!queue.length) {
-      div.innerHTML = '<div class="empty-state"><i data-lucide="check-circle-2"></i><div class="title">没有待审核的资源</div><div class="desc">所有上传都已处理完毕</div></div>';
-    } else {
-      div.innerHTML = queue.map(r => `
-        <div class="result-item">
-          <div>
-            <div class="result-title">${escapeHtml(r.title)}</div>
-            <div class="result-stats">
-              <span class="tag tag-course">${r.course_code}</span>
-              <span><i data-lucide="user"></i>${escapeHtml(r.uploader_name)}</span>
-              <span><i data-lucide="clock"></i>${new Date(r.created_at).toLocaleString()}</span>
-            </div>
-          </div>
-          <div class="result-actions" style="flex-direction: row;">
-            <button class="btn btn-success btn-sm" onclick="reviewResource(${r.resource_id}, 'APPROVE')">
-              <i data-lucide="check"></i>通过
-            </button>
-            <button class="btn btn-danger btn-sm" onclick="reviewResource(${r.resource_id}, 'REJECT')">
-              <i data-lucide="x"></i>拒绝
-            </button>
-          </div>
-        </div>
-      `).join("");
+    const stats = await api("/api/admin/stats");
+    document.getElementById("admin-stats").innerHTML = `
+      <div class="stat-tile"><div class="stat-tile-num">${stats.users_total}</div><div class="stat-tile-lbl">Users</div></div>
+      <div class="stat-tile"><div class="stat-tile-num">${stats.resources_published}</div><div class="stat-tile-lbl">Published</div></div>
+      <div class="stat-tile"><div class="stat-tile-num">${stats.resources_pending}</div><div class="stat-tile-lbl">Pending</div></div>
+      <div class="stat-tile"><div class="stat-tile-num">${stats.downloads_total}</div><div class="stat-tile-lbl">Downloads</div></div>
+      <div class="stat-tile"><div class="stat-tile-num">${stats.point_records_total}</div><div class="stat-tile-lbl">Points Tx</div></div>
+      <div class="stat-tile"><div class="stat-tile-num">${stats.points_circulating}</div><div class="stat-tile-lbl">Points Pool</div></div>
+    `;
+    showAdminTab(currentAdminTab);
+  } catch (e) {
+    showToast("加载管理后台失败：" + e.message, "error");
+  }
+}
+
+async function showAdminTab(tab) {
+  currentAdminTab = tab;
+  document.querySelectorAll(".admin-tab").forEach(b => b.classList.remove("active"));
+  const btn = document.querySelector(`.admin-tab[data-tab="${tab}"]`);
+  if (btn) btn.classList.add("active");
+
+  const content = document.getElementById("admin-content");
+  content.innerHTML = '<p style="padding:20px; opacity:.6">加载中...</p>';
+
+  try {
+    if (tab === "users") {
+      const data = await api("/api/admin/users");
+      content.innerHTML = renderUsersTable(data);
+    } else if (tab === "resources") {
+      const data = await api("/api/admin/resources");
+      content.innerHTML = renderResourcesTable(data);
+    } else if (tab === "points") {
+      const data = await api("/api/admin/points?limit=100");
+      content.innerHTML = renderPointsTable(data);
+    } else if (tab === "queue") {
+      const data = await api("/api/admin/queue");
+      content.innerHTML = renderQueueTable(data);
     }
     setTimeout(() => lucide.createIcons(), 50);
   } catch (e) {
-    showToast("加载审核队列失败：" + e.message, "error");
+    content.innerHTML = `<p style="padding:20px; color:#dc2626">加载失败：${escapeHtml(e.message)}</p>`;
   }
+}
+
+function renderUsersTable(rows) {
+  if (!rows.length) return '<p style="padding:20px; opacity:.6">无用户</p>';
+  let h = `<table class="admin-table"><thead><tr>
+    <th>UID</th><th>学号</th><th>用户名</th><th>邮箱</th>
+    <th class="num">积分</th><th class="num">下载券</th><th class="num">上传</th>
+    <th>Admin</th><th>注册</th></tr></thead><tbody>`;
+  for (const u of rows) {
+    h += `<tr>
+      <td>${u.user_id}</td>
+      <td>${escapeHtml(u.student_id || "-")}</td>
+      <td>${escapeHtml(u.username)}</td>
+      <td style="color:#6b7280">${escapeHtml(u.email || "-")}</td>
+      <td class="num"><strong>${u.points_balance}</strong></td>
+      <td class="num">${u.download_credits}</td>
+      <td class="num">${u.upload_count}</td>
+      <td>${u.is_admin ? '<span class="badge-admin">ADMIN</span>' : ""}</td>
+      <td style="color:#6b7280">${(u.created_at || "").slice(0,10)}</td>
+    </tr>`;
+  }
+  return h + "</tbody></table>";
+}
+
+function renderResourcesTable(rows) {
+  if (!rows.length) return '<p style="padding:20px; opacity:.6">无资源</p>';
+  let h = `<table class="admin-table"><thead><tr>
+    <th>RID</th><th>标题</th><th>课程</th><th>学年</th><th>类型</th>
+    <th>状态</th><th>上传者</th><th class="num">下载</th><th class="num">评分</th><th>时间</th>
+  </tr></thead><tbody>`;
+  for (const r of rows) {
+    const sb = r.status === "PUBLISHED" ? "status-pub" : r.status === "PENDING" ? "status-pen" : "status-rej";
+    h += `<tr>
+      <td>${r.resource_id}</td>
+      <td>${escapeHtml(r.title)}</td>
+      <td><span class="tag tag-course">${escapeHtml(r.course_code)}</span></td>
+      <td>${r.academic_year || "-"}</td>
+      <td style="color:#6b7280">${escapeHtml(r.type || "-")}</td>
+      <td><span class="status-pill ${sb}">${r.status}</span></td>
+      <td>${escapeHtml(r.uploader_name)}</td>
+      <td class="num">${r.download_count}</td>
+      <td class="num">${r.avg_rating ? r.avg_rating.toFixed(1) : "-"}</td>
+      <td style="color:#6b7280">${(r.created_at || "").slice(0,10)}</td>
+    </tr>`;
+  }
+  return h + "</tbody></table>";
+}
+
+function renderPointsTable(rows) {
+  if (!rows.length) return '<p style="padding:20px; opacity:.6">无积分流水</p>';
+  let h = `<table class="admin-table"><thead><tr>
+    <th>ID</th><th>用户</th><th>动作</th><th class="num">Δ</th><th class="num">余额</th>
+    <th class="num">资源</th><th>时间</th></tr></thead><tbody>`;
+  for (const p of rows) {
+    const sign = p.points_delta > 0 ? "+" : "";
+    const cls = p.points_delta > 0 ? "delta-pos" : p.points_delta < 0 ? "delta-neg" : "delta-zero";
+    h += `<tr>
+      <td>${p.id}</td>
+      <td>${escapeHtml(p.user_name)}</td>
+      <td><span class="action-tag">${escapeHtml(p.action_type)}</span></td>
+      <td class="num ${cls}"><strong>${sign}${p.points_delta}</strong></td>
+      <td class="num">${p.balance_after}</td>
+      <td class="num" style="color:#6b7280">${p.resource_id || "-"}</td>
+      <td style="color:#6b7280">${(p.created_at || "").replace("T"," ").slice(0,16)}</td>
+    </tr>`;
+  }
+  return h + "</tbody></table>";
+}
+
+function renderQueueTable(rows) {
+  if (!rows.length) return '<div class="empty-state"><i data-lucide="check-circle-2"></i><div class="title">没有待审核的资源</div><div class="desc">所有上传都已处理完毕</div></div>';
+  return rows.map(r => `
+    <div class="result-item">
+      <div>
+        <div class="result-title">${escapeHtml(r.title)}</div>
+        <div class="result-stats">
+          <span class="tag tag-course">${escapeHtml(r.course_code)}</span>
+          <span><i data-lucide="user"></i>${escapeHtml(r.uploader_name)}</span>
+          <span><i data-lucide="clock"></i>${new Date(r.created_at).toLocaleString()}</span>
+        </div>
+      </div>
+      <div class="result-actions" style="flex-direction: row;">
+        <button class="btn btn-success btn-sm" onclick="reviewResource(${r.resource_id}, 'APPROVE')"><i data-lucide="check"></i>通过</button>
+        <button class="btn btn-danger btn-sm" onclick="reviewResource(${r.resource_id}, 'REJECT')"><i data-lucide="x"></i>拒绝</button>
+      </div>
+    </div>`).join("");
 }
 
 async function reviewResource(id, decision) {

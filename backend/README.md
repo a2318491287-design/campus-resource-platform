@@ -1,4 +1,4 @@
-# Campus Resource Platform — Backend
+# MUST Campus Academic Resource Sharing Platform — Backend
 
 FastAPI + MariaDB 后端，提供完整的 REST API 实现 SDD v1.0 文档的所有功能。
 

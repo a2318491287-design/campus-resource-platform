@@ -40,3 +40,13 @@ dist/
 
 # Logs
 *.log
+
+# Document deliverables — submitted to Moodle, not GitHub
+*.docx
+*.pptx
+Final_Presentation.html
+
+# Course resources — copyrighted, served only on deployed VPS
+resources/
+backend/storage/
+ppt_assets/

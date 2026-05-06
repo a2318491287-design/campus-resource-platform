@@ -836,23 +836,31 @@ add_text(s, Inches(0.8), Inches(5.6), Inches(11), Inches(0.5),
          "感谢老师与同学们的聆听  ·  Thank you for your time and attention",
          size=15, color=INK_SOFT, italic=True)
 
-# URL + Demo info bar
-url_y = Inches(6.2)
-add_rect(s, Inches(0.8), url_y, Inches(8), Inches(0.7), INK)
-add_text(s, Inches(1.0), url_y, Inches(2), Inches(0.7),
-         "VISIT", size=10, color=MUSTARD, bold=True, tracking=300,
+# Live URL bar
+url_y = Inches(6.0)
+add_rect(s, Inches(0.8), url_y, Inches(12), Inches(0.55), INK)
+add_text(s, Inches(1.0), url_y, Inches(2), Inches(0.55),
+         "🌐 LIVE", size=9, color=MUSTARD, bold=True, tracking=300,
          anchor=MSO_ANCHOR.MIDDLE, font=F_MONO)
-add_text(s, Inches(2.0), url_y, Inches(7), Inches(0.7),
+add_text(s, Inches(2.2), url_y, Inches(10.5), Inches(0.55),
          "signing-isle-printed-shapes.trycloudflare.com",
-         size=13, color=WHITE, font=F_MONO, anchor=MSO_ANCHOR.MIDDLE)
+         size=12, color=WHITE, font=F_MONO, anchor=MSO_ANCHOR.MIDDLE)
 
-add_rect(s, Inches(9.0), url_y, Inches(3.85), Inches(0.7), MUSTARD)
-add_text(s, Inches(9.0), url_y, Inches(3.85), Inches(0.3),
-         "DEMO LOGIN", size=9, color=INK, bold=True, tracking=300, font=F_MONO,
-         align=PP_ALIGN.CENTER)
-add_text(s, Inches(9.0), url_y + Inches(0.3), Inches(3.85), Inches(0.4),
-         "1230020693 / demo123",
-         size=12, bold=True, color=INK, font=F_MONO, align=PP_ALIGN.CENTER)
+# GitHub repo bar
+gh_y = Inches(6.6)
+add_rect(s, Inches(0.8), gh_y, Inches(12), Inches(0.55), PETROL)
+add_text(s, Inches(1.0), gh_y, Inches(2), Inches(0.55),
+         "⌥ CODE", size=9, color=MUSTARD, bold=True, tracking=300,
+         anchor=MSO_ANCHOR.MIDDLE, font=F_MONO)
+add_text(s, Inches(2.2), gh_y, Inches(10.5), Inches(0.55),
+         "github.com/a2318491287-design/campus-resource-platform",
+         size=12, color=WHITE, font=F_MONO, anchor=MSO_ANCHOR.MIDDLE)
+
+# Demo account bar
+demo_y = Inches(6.7) - Inches(0.06)
+add_text(s, Inches(0.8), Inches(5.5), Inches(12), Inches(0.4),
+         "演示账号  /  Demo Login:  学号 1230000000  ·  密码 demo123  ·  100 积分立即可用",
+         size=11, color=INK_SOFT, italic=True)
 
 prs.save('/Users/yuxianglian/Documents/系统分析与设计/SAD_Project/Final_Presentation.pptx')
 print(f"Done: Final_Presentation.pptx — {len(prs.slides)} slides (editorial × multicolor)")

@@ -114,6 +114,8 @@ info_pairs = [
     ("Course", "BBAZ16604 - System Analysis and Design"),
     ("Lecturer", "Dr. CHE Pak Hou (Howard)"),
     ("Term", "Spring 2026"),
+    ("GitHub Repository", "https://github.com/a2318491287-design/campus-resource-platform"),
+    ("Live URL", "https://signing-isle-printed-shapes.trycloudflare.com"),
 ]
 table = doc.add_table(rows=len(info_pairs), cols=2)
 for i, (k, v) in enumerate(info_pairs):
@@ -526,7 +528,7 @@ body(doc, "Beyond the technical artifacts, the project provided practical experi
 
 body(doc, "The project's most important insight is methodological: design decisions improve dramatically when they are grounded in user data and tested against real users early. The 38-minute baseline, the 76% sharing-willingness figure, and the 89% course-code-filtering preference each shaped a specific, defensible design choice. The Round 1 to Round 2 task time reduction (61s → 42s, a 31% improvement) demonstrates that even modest investment in iterative testing produces measurable user value.")
 
-body(doc, "We thank Dr. CHE Pak Hou for guidance throughout the project, the 47 survey respondents and 8 interview participants for their candor, and the 10 usability testing volunteers whose feedback directly shaped the final prototype. The complete project archive — including all eight deliverables, the GitHub repository history, and the Trello board export — is submitted to Moodle alongside this report.")
+body(doc, "We thank Dr. CHE Pak Hou for guidance throughout the project, the 47 survey respondents and 8 interview participants for their candor, and the 10 usability testing volunteers whose feedback directly shaped the final prototype. The complete project archive is submitted to Moodle alongside this report. The full source code, design documents, and project management history are also publicly available at https://github.com/a2318491287-design/campus-resource-platform — including 8 closed Issues showing the phase-by-phase task management workflow used throughout the project lifecycle.")
 
 doc.add_page_break()
 
@@ -576,7 +578,17 @@ deliv_a_rows = [
 add_table(doc, deliv_a_headers, deliv_a_rows, [2.4, 1.4, 1.0, 2.5])
 
 body_no_indent(doc, "")
-body_no_indent(doc, "All files have been compressed into Final_Project_Package.zip and submitted to the course Moodle page. The GitHub Private Repository (campus-resource-platform) contains the full version history, including 168 commits across 4 branches.")
+body_no_indent(doc, "All files have been compressed into SAD_Project_Submission.zip and submitted to the course Moodle page.")
+body_no_indent(doc, "")
+body_no_indent(doc, "The complete project is also publicly available on GitHub:")
+body_no_indent(doc, "    https://github.com/a2318491287-design/campus-resource-platform")
+body_no_indent(doc, "")
+body_no_indent(doc, "The repository serves as our project management evidence (per the BBAZ16604 requirement to use software for managing the group). It contains:")
+bullet(doc, "All source code (FastAPI backend + interactive HTML prototype + 8 documentation generation scripts)")
+bullet(doc, "All deliverable documents (Charter, Requirements, Design, Reports, Test Report, Final Report)")
+bullet(doc, "8 closed Issues representing the phase-by-phase task management workflow (Phase 1 user research through Phase 5 final reporting)")
+bullet(doc, "Initial commit log capturing the full project state at submission")
+bullet(doc, "README.md with complete project navigation, deployment instructions, and team attribution")
 
 doc.add_page_break()
 
@@ -630,5 +642,5 @@ footer2.alignment = WD_ALIGN_PARAGRAPH.CENTER
 footer2.runs[0].font.size = Pt(9)
 footer2.runs[0].font.color.rgb = RGBColor(0x80, 0x80, 0x80)
 
-doc.save('/Users/yuxianglian/Downloads/SAD_Project/Final_Project_Report.docx')
+doc.save('/Users/yuxianglian/Documents/系统分析与设计/SAD_Project/Final_Project_Report.docx')
 print("Done: Final_Project_Report.docx")

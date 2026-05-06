@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>校园学术资源共享平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+*::before, *::after { box-sizing: border-box; }
+
+:root {
+  /* Neutrals (Tailwind zinc) */
+  --gray-50:  #FAFAFA;
+  --gray-100: #F4F4F5;
+  --gray-150: #ECECEE;
+  --gray-200: #E4E4E7;
+  --gray-300: #D4D4D8;
+  --gray-400: #A1A1AA;
+  --gray-500: #71717A;
+  --gray-600: #52525B;
+  --gray-700: #3F3F46;
+  --gray-800: #27272A;
+  --gray-900: #18181B;
+
+  /* Brand — academic blue */
+  --primary-50:  #EFF4FB;
+  --primary-100: #DEE9F5;
+  --primary-200: #B8D0E8;
+  --primary-500: #2E74B5;
+  --primary-600: #1F497D;
+  --primary-700: #173961;
+
+  /* Accent — golden */
+  --accent-50:  #FFF8E6;
+  --accent-100: #FEF3CD;
+  --accent-400: #F4B400;
+  --accent-500: #F59E0B;
+  --accent-600: #D97706;
+
+  --success-50:  #ECFDF5;
+  --success-500: #10B981;
+  --success-600: #059669;
+  --danger-50:  #FEF2F2;
+  --danger-500: #EF4444;
+  --danger-600: #DC2626;
+
+  --bg: var(--gray-50);
+  --surface: #FFFFFF;
+  --border: var(--gray-200);
+  --border-strong: var(--gray-300);
+  --text: var(--gray-900);
+  --text-soft: var(--gray-600);
+  --text-mute: var(--gray-500);
+
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.06), 0 4px 6px rgba(0,0,0,0.04);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.08), 0 10px 10px rgba(0,0,0,0.04);
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Lucide icon defaults === */
+.lucide, [data-lucide] {
+  width: 16px; height: 16px;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+.icon-lg { width: 20px !important; height: 20px !important; }
+.icon-xl { width: 24px !important; height: 24px !important; }
+
+/* === Layout === */
+.app-layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; bottom: 0; left: 0;
+  z-index: 50;
+}
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--text);
+}
+.brand-mark {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 15px;
+  box-shadow: var(--shadow-sm);
+}
+.brand-text { font-weight: 700; font-size: 14px; line-height: 1.3; }
+.brand-text small {
+  display: block; font-weight: 400;
+  font-size: 11px; color: var(--text-mute); margin-top: 2px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 12px;
+  overflow-y: auto;
+}
+.nav-section-label {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 16px 12px 8px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  color: var(--text-soft);
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px; font-weight: 500;
+  transition: all 0.15s var(--ease);
+  margin-bottom: 2px;
+}
+.nav-item:hover { background: var(--gray-100); color: var(--text); }
+.nav-item.active {
+  background: var(--primary-50);
+  color: var(--primary-600);
+  font-weight: 600;
+}
+.nav-item.active .lucide { color: var(--primary-600); }
+.nav-item .lucide { color: var(--text-mute); }
+.nav-item:hover .lucide { color: var(--text-soft); }
+
+.sidebar-footer {
+  padding: 12px;
+  border-top: 1px solid var(--border);
+}
+.user-card {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px;
+  border-radius: var(--radius);
+  background: var(--gray-50);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.user-card:hover { background: var(--gray-100); }
+.avatar {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  border-radius: 50%;
+  color: white; font-weight: 700; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.user-card-info { flex: 1; min-width: 0; }
+.user-card-name {
+  font-weight: 600; font-size: 13px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.user-card-meta { font-size: 11px; color: var(--text-mute); }
+
+.btn-logout {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--surface);
+  color: var(--danger-500);
+  border: 1px solid var(--danger-50);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s var(--ease);
+}
+.btn-logout:hover {
+  background: var(--danger-50);
+  border-color: var(--danger-500);
+}
+.btn-logout .lucide { color: var(--danger-500); }
+.sidebar .btn-logout span:not(.lucide) { display: inline; }
+@media (max-width: 768px) {
+  .sidebar .btn-logout span:not(.lucide) { display: none; }
+  .btn-logout { padding: 10px; }
+}
+
+.points-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px;
+  background: var(--accent-50);
+  color: var(--accent-600);
+  border-radius: var(--radius-pill);
+  font-weight: 700; font-size: 12px;
+  border: 1px solid var(--accent-100);
+}
+
+/* === Main content === */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  min-height: 100vh;
+}
+.page {
+  display: none;
+  padding: 32px 40px 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page.active { display: block; animation: fadeIn 0.25s var(--ease); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-head { margin-bottom: 24px; }
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.page-subtitle {
+  font-size: 14px;
+  color: var(--text-mute);
+}
+.breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--text-mute);
+  margin-bottom: 12px;
+}
+.breadcrumb a { color: var(--text-mute); text-decoration: none; cursor: pointer; }
+.breadcrumb a:hover { color: var(--primary-600); }
+
+/* === Card === */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  transition: all 0.2s var(--ease);
+}
+.card-hover { cursor: pointer; }
+.card-hover:hover {
+  border-color: var(--primary-100);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* === Search === */
+.search-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-xs);
+}
+.search-row {
+  display: flex; gap: 8px;
+  margin-bottom: 12px;
+}
+.search-input {
+  flex: 1;
+  position: relative;
+  display: flex; align-items: center;
+}
+.search-input .lucide {
+  position: absolute; left: 14px;
+  color: var(--text-mute);
+  width: 18px; height: 18px;
+}
+.search-input input {
+  width: 100%;
+  height: 42px;
+  padding: 0 16px 0 42px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--gray-50);
+  font-family: inherit; font-size: 14px;
+  color: var(--text);
+  transition: all 0.15s;
+}
+.search-input input:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-50);
+}
+
+.filter-row {
+  display: flex; flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.filter {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.filter-label {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.select {
+  height: 36px;
+  padding: 0 30px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center;
+  font-size: 13px;
+  font-family: inherit;
+  appearance: none; -webkit-appearance: none;
+  cursor: pointer;
+  min-width: 140px;
+  transition: border-color 0.15s;
+}
+.select:focus, .select:hover {
+  outline: none; border-color: var(--primary-500);
+}
+
+.range-wrap {
+  display: flex; align-items: center; gap: 8px;
+  height: 36px;
+}
+.range-wrap input[type="range"] {
+  width: 100px;
+  accent-color: var(--primary-500);
+}
+.range-val {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 600; color: var(--accent-600);
+  background: var(--accent-50);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  min-width: 50px;
+  justify-content: center;
+}
+
+/* === Buttons === */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s var(--ease);
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.btn-primary {
+  background: var(--primary-600); color: white;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-500);
+  box-shadow: 0 1px 0 0 var(--primary-700) inset, var(--shadow-sm);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-secondary:hover {
+  border-color: var(--border-strong);
+  background: var(--gray-50);
+}
+
+.btn-success { background: var(--success-500); color: white; }
+.btn-success:hover { background: var(--success-600); }
+
+.btn-danger { background: var(--danger-500); color: white; }
+.btn-danger:hover { background: var(--danger-600); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-soft);
+}
+.btn-ghost:hover { background: var(--gray-100); color: var(--text); }
+
+.btn-sm { height: 32px; padding: 0 12px; font-size: 13px; }
+.btn-lg { height: 44px; padding: 0 20px; font-size: 15px; }
+
+/* === Result list === */
+.results-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 13px; color: var(--text-mute);
+}
+.results-meta strong { color: var(--text); font-weight: 600; }
+
+.result-list { display: flex; flex-direction: column; gap: 12px; }
+
+.result-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+  transition: all 0.2s var(--ease);
+  position: relative;
+}
+.result-item:hover {
+  border-color: var(--primary-100);
+  box-shadow: var(--shadow-md);
+}
+.result-item.pinned {
+  border-color: var(--accent-100);
+  background: linear-gradient(180deg, var(--accent-50), var(--surface) 50%);
+}
+
+.result-tags {
+  display: flex; align-items: center;
+  gap: 6px; flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.result-title {
+  font-size: 16px; font-weight: 600;
+  color: var(--text); margin-bottom: 6px;
+  cursor: pointer;
+  letter-spacing: -0.005em;
+}
+.result-title:hover { color: var(--primary-500); }
+.result-desc {
+  font-size: 13px; color: var(--text-soft);
+  line-height: 1.55;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.result-stats {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 12px; color: var(--text-mute);
+}
+.result-stats span {
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.result-stats .lucide { width: 14px; height: 14px; }
+
+.result-actions {
+  display: flex; flex-direction: column; gap: 6px; align-items: flex-end;
+}
+.relevance-badge {
+  font-size: 11px; color: var(--text-mute);
+  font-variant-numeric: tabular-nums;
+  font-family: 'SF Mono', Consolas, monospace;
+}
+
+/* === Tags === */
+.tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px;
+  background: var(--gray-100);
+  color: var(--text-soft);
+  border-radius: var(--radius-sm);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.tag-course { background: var(--primary-50); color: var(--primary-600); }
+.tag-type { background: var(--accent-50); color: var(--accent-600); }
+.tag-year { background: var(--success-50); color: var(--success-600); }
+.tag-pin {
+  background: linear-gradient(135deg, var(--accent-400), var(--accent-500));
+  color: white;
+  font-weight: 700;
+}
+
+.stars { color: var(--accent-500); letter-spacing: 1px; }
+
+/* === Detail === */
+.detail-grid {
+  display: grid; grid-template-columns: 1fr 320px; gap: 20px;
+}
+@media (max-width: 900px) {
+  .detail-grid { grid-template-columns: 1fr; }
+}
+.detail-title {
+  font-size: 24px; font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.detail-meta {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  margin-bottom: 20px;
+}
+.section-label {
+  font-size: 11px; font-weight: 700;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  margin-top: 24px;
+}
+.description {
+  font-size: 14px; color: var(--text);
+  line-height: 1.65;
+}
+.cost-banner {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--accent-50);
+  border: 1px solid var(--accent-100);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 13px;
+  margin: 20px 0 12px;
+}
+.cost-banner .lucide {
+  color: var(--accent-600);
+  width: 20px; height: 20px;
+}
+.cost-banner strong { color: var(--accent-600); font-weight: 700; }
+
+.rating-input {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 12px;
+}
+.star-row {
+  display: flex; gap: 4px;
+  font-size: 28px; line-height: 1;
+}
+.star-row span {
+  color: var(--gray-300);
+  cursor: pointer;
+  transition: color 0.1s, transform 0.1s;
+  user-select: none;
+}
+.star-row span:hover { transform: scale(1.1); }
+.star-row span.active { color: var(--accent-500); }
+
+.textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 13px;
+  resize: vertical;
+  background: var(--gray-50);
+  transition: all 0.15s;
+}
+.textarea:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-50);
+}
+
+.related-list { display: flex; flex-direction: column; gap: 6px; }
+.related-item {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s;
+  border: 1px solid transparent;
+}
+.related-item:hover { background: var(--gray-50); border-color: var(--border); }
+.related-item .ri-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+.related-item .ri-meta { font-size: 11px; color: var(--text-mute); }
+
+.stat-row {
+  display: flex; justify-content: space-between;
+  padding: 8px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row .label { color: var(--text-mute); }
+.stat-row .value { font-weight: 600; color: var(--text); }
+
+/* === Form === */
+.form-grid { display: flex; flex-direction: column; gap: 18px; max-width: 640px; }
+.form-row { display: flex; flex-direction: column; gap: 6px; }
+.form-row label {
+  font-size: 13px; font-weight: 600; color: var(--text);
+}
+.form-row .help { font-size: 12px; color: var(--text-mute); }
+.input, .form-row input[type="text"], .form-row input[type="email"], .form-row input[type="password"] {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: inherit; font-size: 14px;
+  background: var(--gray-50);
+  transition: all 0.15s;
+}
+.input:focus, .form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-50);
+}
+.form-grid-2 {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.dropzone {
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--gray-50);
+  transition: all 0.15s;
+}
+.dropzone:hover {
+  border-color: var(--primary-500);
+  background: var(--primary-50);
+}
+.dropzone .lucide {
+  width: 36px; height: 36px;
+  color: var(--primary-500);
+  margin-bottom: 8px;
+}
+.dropzone strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 2px; }
+.dropzone .browse-link { color: var(--primary-500); cursor: pointer; }
+
+.banner {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  border: 1px solid;
+}
+.banner-success { background: var(--success-50); border-color: var(--success-500); color: var(--success-600); }
+.banner-success .lucide { color: var(--success-500); }
+.banner-info { background: var(--primary-50); border-color: var(--primary-100); color: var(--primary-600); }
+
+/* === Hero (Points dashboard) === */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-500) 50%, var(--primary-600) 100%);
+  color: white;
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -50%; right: -10%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(244,180,0,0.15), transparent 70%);
+  border-radius: 50%;
+}
+.hero-stat { position: relative; z-index: 1; }
+.hero-stat .label {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+.hero-stat .value {
+  font-size: 36px; font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stat .sub {
+  font-size: 12px; opacity: 0.8; margin-top: 6px;
+}
+
+.dashboard-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+@media (max-width: 800px) { .dashboard-grid { grid-template-columns: 1fr; } }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 14px; font-weight: 600; color: var(--text);
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.panel-head .title-with-icon {
+  display: inline-flex; align-items: center; gap: 8px;
+}
+
+.redeem-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 8px;
+  background: var(--surface);
+}
+.redeem-card:hover {
+  border-color: var(--primary-200);
+  background: var(--primary-50);
+  transform: translateY(-1px);
+}
+.redeem-card-icon {
+  width: 40px; height: 40px;
+  background: var(--accent-50);
+  color: var(--accent-600);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+}
+.redeem-card-icon .lucide { width: 20px; height: 20px; }
+.redeem-card-info { flex: 1; }
+.redeem-card-title { font-size: 14px; font-weight: 600; }
+.redeem-card-desc { font-size: 12px; color: var(--text-mute); margin-top: 2px; }
+.redeem-card-cost {
+  background: var(--accent-50);
+  color: var(--accent-600);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 12px;
+  border: 1px solid var(--accent-100);
+}
+
+/* === Table === */
+.table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-mute);
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--border);
+}
+.table th:first-child { border-top-left-radius: var(--radius); }
+.table th:last-child { border-top-right-radius: var(--radius); }
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.table tr:last-child td { border-bottom: none; }
+.delta-pos { color: var(--success-600); font-weight: 700; font-variant-numeric: tabular-nums; }
+.delta-neg { color: var(--danger-500); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* === Leaderboard === */
+.lb-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-row.is-me { background: var(--accent-50); padding: 10px 12px; border-radius: var(--radius); border-bottom: 1px solid var(--accent-100); }
+.rank-badge {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--gray-100);
+  color: var(--text-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 12px;
+  flex-shrink: 0;
+}
+.rank-badge.r1 { background: linear-gradient(135deg, #FFD700, #FFB300); color: white; box-shadow: 0 2px 6px rgba(255,200,0,0.4); }
+.rank-badge.r2 { background: linear-gradient(135deg, #D4D4D8, #A1A1AA); color: white; }
+.rank-badge.r3 { background: linear-gradient(135deg, #CD7F32, #A0522D); color: white; }
+.lb-name { flex: 1; font-weight: 500; font-size: 13px; }
+.lb-pts { color: var(--accent-600); font-weight: 700; font-size: 13px; }
+
+/* === Profile === */
+.profile-card {
+  text-align: center;
+  padding: 20px;
+}
+.profile-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 700;
+  margin: 0 auto 14px;
+  box-shadow: var(--shadow-md);
+}
+.profile-name { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+.profile-id { font-size: 12px; color: var(--text-mute); margin-bottom: 18px; }
+.profile-stats {
+  display: flex; justify-content: space-around;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.profile-stat { text-align: center; }
+.profile-stat .v { font-size: 22px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+.profile-stat .l { font-size: 11px; color: var(--text-mute); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.4px; }
+.profile-stat.is-points .v { color: var(--accent-600); }
+
+/* === Empty state === */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text-mute);
+}
+.empty-state .lucide {
+  width: 48px; height: 48px;
+  color: var(--gray-300);
+  margin-bottom: 12px;
+}
+.empty-state .title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.empty-state .desc { font-size: 13px; }
+
+/* === Skeleton === */
+.skeleton {
+  background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-150) 50%, var(--gray-100) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: var(--radius);
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-card { height: 100px; margin-bottom: 12px; }
+
+/* === Toast === */
+.toast {
+  position: fixed; top: 20px; left: 50%;
+  transform: translate(-50%, -200%);
+  background: var(--gray-900);
+  color: white;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+  transition: transform 0.25s var(--ease);
+  z-index: 1000;
+  max-width: 420px;
+  pointer-events: auto;
+}
+.toast.show { transform: translate(-50%, 0); }
+.toast.success { background: var(--success-600); }
+.toast.error { background: var(--danger-600); }
+.toast .lucide { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* === Modal === */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(24, 24, 27, 0.5);
+  display: none; align-items: center; justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.15s;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  max-width: 460px; width: calc(100% - 32px);
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.2s var(--ease);
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-icon {
+  width: 44px; height: 44px;
+  background: var(--primary-50);
+  color: var(--primary-600);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.modal-icon .lucide { width: 24px; height: 24px; }
+.modal h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.modal p { font-size: 13px; color: var(--text-soft); line-height: 1.55; margin-bottom: 18px; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+/* === Login === */
+.auth-screen {
+  display: none;
+  min-height: 100vh;
+  align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(31,73,125,0.05), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(244,180,0,0.04), transparent 50%),
+    var(--bg);
+  padding: 24px;
+}
+.auth-screen.active { display: flex; }
+.auth-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+}
+.auth-card-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 6px;
+}
+.auth-card h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.auth-card .subtitle { font-size: 13px; color: var(--text-mute); margin-bottom: 24px; }
+
+.auth-tabs {
+  display: flex;
+  background: var(--gray-100);
+  padding: 4px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+}
+.auth-tabs button {
+  flex: 1;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500; font-size: 13px;
+  color: var(--text-soft);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.auth-tabs button.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-xs);
+  font-weight: 600;
+}
+
+.auth-card .input { width: 100%; margin-bottom: 12px; }
+.auth-card .btn { width: 100%; }
+
+.demo-tip {
+  margin-top: 20px;
+  padding: 14px;
+  background: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  border-radius: var(--radius);
+  font-size: 12px;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+.demo-tip code {
+  background: var(--surface);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  font-family: 'SF Mono', Consolas, monospace;
+  font-size: 11px;
+  color: var(--primary-600);
+}
+
+/* === API status === */
+.api-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: 600;
+  background: var(--gray-50);
+  border: 1px solid var(--border);
+  color: var(--text-mute);
+  width: fit-content;
+  margin-bottom: 8px;
+}
+.api-status .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gray-400);
+}
+.api-status.online { color: var(--success-600); border-color: var(--success-50); background: var(--success-50); }
+.api-status.online .dot { background: var(--success-500); box-shadow: 0 0 6px var(--success-500); }
+.api-status.offline { color: var(--danger-600); border-color: var(--danger-50); background: var(--danger-50); }
+.api-status.offline .dot { background: var(--danger-500); }
+@media (max-width: 768px) {
+  .api-status span:not(.dot) { display: none; }
+}
+
+.flex { display: flex; }
+.gap-2 { gap: 8px; } .gap-3 { gap: 12px; }
+.text-mute { color: var(--text-mute); }
+.text-soft { color: var(--text-soft); }
+.muted { font-size: 12px; color: var(--text-mute); }
+
+/* === Mobile === */
+@media (max-width: 768px) {
+  .sidebar { width: 64px; }
+  .sidebar .brand-text, .sidebar .nav-section-label, .sidebar .user-card-info,
+  .sidebar .points-pill, .sidebar .nav-item span:not(.lucide) { display: none; }
+  .sidebar .nav-item { justify-content: center; }
+  .main { margin-left: 64px; }
+  .page { padding: 24px 20px; }
+  .filter-row { flex-direction: column; }
+  .form-grid-2 { grid-template-columns: 1fr; }
+  .hero { grid-template-columns: 1fr; }
+  .result-item { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ AUTH SCREEN ============ -->
+<div class="auth-screen active" id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-card-head">
+      <div class="brand-mark">学</div>
+      <h2>校园学术资源共享平台</h2>
+    </div>
+    <div class="subtitle">登录或注册以使用平台</div>
+
+    <div class="auth-tabs">
+      <button class="active" id="tab-login" onclick="switchAuth('login')">登录</button>
+      <button id="tab-register" onclick="switchAuth('register')">注册</button>
+    </div>
+
+    <div id="login-form">
+      <input class="input" type="text" id="login-student-id" placeholder="学号" value="1230000000">
+      <input class="input" type="password" id="login-password" placeholder="密码" value="demo123">
+      <button class="btn btn-primary btn-lg" onclick="doLogin()">
+        <i data-lucide="log-in"></i>登录
+      </button>
+    </div>
+
+    <div id="register-form" style="display: none;">
+      <input class="input" type="text" id="reg-student-id" placeholder="学号">
+      <input class="input" type="password" id="reg-password" placeholder="设置密码（≥6 位）">
+      <div class="banner banner-success" style="margin-bottom: 12px;">
+        <i data-lucide="gift"></i>
+        <div>新用户注册即送 <strong>100 积分</strong>，可立即下载约 100 份资源</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="doRegister()">
+        <i data-lucide="user-plus"></i>注册并领取 100 积分
+      </button>
+    </div>
+
+    <div class="demo-tip">
+      <strong style="color: var(--text);">演示账号：</strong>
+      学号 <code>1230000000</code> · 密码 <code>demo123</code>
+      <div style="margin-top: 4px;">100 积分 · 即可立刻搜索 / 下载 / 评分</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MAIN APP ============ -->
+<div class="app-layout" id="app" style="display: none;">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a class="brand">
+        <div class="brand-mark">学</div>
+        <div class="brand-text">
+          校园资源共享
+          <small>Campus Resource Platform</small>
+        </div>
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">导航</div>
+      <a class="nav-item active" data-page="search" onclick="goToPage('search', this)">
+        <i data-lucide="search"></i><span>资源检索</span>
+      </a>
+      <a class="nav-item" data-page="upload" onclick="goToPage('upload', this)">
+        <i data-lucide="upload-cloud"></i><span>上传资源</span>
+      </a>
+      <a class="nav-item" data-page="points" onclick="goToPage('points', this)">
+        <i data-lucide="coins"></i><span>积分中心</span>
+      </a>
+      <a class="nav-item" data-page="profile" onclick="goToPage('profile', this)">
+        <i data-lucide="user"></i><span>个人中心</span>
+      </a>
+
+      <div class="nav-section-label" id="admin-section" style="display: none;">管理</div>
+      <a class="nav-item" data-page="admin" id="admin-tab" onclick="goToPage('admin', this)" style="display: none;">
+        <i data-lucide="shield-check"></i><span>审核队列</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="avatar" id="topbar-avatar">?</div>
+        <div class="user-card-info">
+          <div class="user-card-name" id="topbar-username">-</div>
+          <div class="user-card-meta">
+            <span class="points-pill" id="topbar-points">⭐ - pts</span>
+          </div>
+        </div>
+      </div>
+      <div class="api-status offline" id="api-status">
+        <span class="dot"></span><span id="api-status-text">检测后端...</span>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">
+        <i data-lucide="log-out"></i><span>登出</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- ============ SEARCH PAGE ============ -->
+    <section class="page active" id="page-search">
+      <div class="page-head">
+        <h1 class="page-title">资源精准检索</h1>
+        <p class="page-subtitle">通过课程代码、学年、类型多维度筛选，快速找到你需要的学术资源</p>
+      </div>
+
+      <div class="search-card">
+        <div class="search-row">
+          <div class="search-input">
+            <i data-lucide="search"></i>
+            <input type="text" id="search-keyword" placeholder="输入关键词，例如：System Analysis、Data Mining、Forecasting...">
+          </div>
+          <button class="btn btn-primary" onclick="performSearch()">
+            <i data-lucide="search"></i>搜索
+          </button>
+        </div>
+        <div class="filter-row">
+          <div class="filter">
+            <span class="filter-label">课程代码</span>
+            <select class="select" id="filter-course" onchange="performSearch()">
+              <option value="">全部课程</option>
+              <option value="BBAZ16604">BBAZ16604 · System Analysis & Design</option>
+              <option value="BBAZ16603">BBAZ16603 · Data Mining</option>
+              <option value="BBAZ16605">BBAZ16605 · Business Forecasting</option>
+              <option value="BBAZ16607">BBAZ16607 · E-Commerce</option>
+            </select>
+          </div>
+          <div class="filter">
+            <span class="filter-label">学年</span>
+            <select class="select" id="filter-year" onchange="performSearch()">
+              <option value="">全部年份</option>
+              <option value="2026">2025-2026</option>
+              <option value="2025">2024-2025</option>
+            </select>
+          </div>
+          <div class="filter">
+            <span class="filter-label">资源类型</span>
+            <select class="select" id="filter-type" onchange="performSearch()">
+              <option value="">全部类型</option>
+              <option value="LECTURE">课程讲义</option>
+              <option value="GUIDE">操作指南</option>
+              <option value="NOTES">课堂笔记</option>
+            </select>
+          </div>
+          <div class="filter">
+            <span class="filter-label">最低评分</span>
+            <div class="range-wrap">
+              <input type="range" min="0" max="5" step="0.5" value="0" id="filter-rating"
+                oninput="document.getElementById('rating-val').innerHTML = '<i data-lucide=star></i>' + this.value;lucide.createIcons();"
+                onchange="performSearch()">
+              <span class="range-val" id="rating-val"><i data-lucide="star"></i>0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-meta" id="results-count"><span class="text-mute">加载中...</span></div>
+      <div class="result-list" id="results"></div>
+    </section>
+
+    <!-- ============ DETAIL PAGE ============ -->
+    <section class="page" id="page-detail">
+      <div class="breadcrumb">
+        <a onclick="goToPage('search')"><i data-lucide="arrow-left"></i> 返回搜索结果</a>
+      </div>
+
+      <div class="detail-grid">
+        <div>
+          <div class="card">
+            <h2 class="detail-title" id="detail-title"></h2>
+            <div class="detail-meta" id="detail-meta"></div>
+
+            <div class="section-label">资源描述</div>
+            <p class="description" id="detail-description"></p>
+
+            <div class="cost-banner">
+              <i data-lucide="coins"></i>
+              <div>
+                下载此资源消耗 <strong>1 积分</strong> ·
+                你当前余额：<strong id="detail-balance">- 积分</strong>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-lg" onclick="downloadCurrentResource()" id="detail-dl-btn" style="width: 100%;">
+              <i data-lucide="download"></i>下载资源
+            </button>
+
+            <div class="section-label">为这份资源评分</div>
+            <div class="rating-input">
+              <div class="star-row" id="star-input">
+                <span onclick="setStars(1)">★</span>
+                <span onclick="setStars(2)">★</span>
+                <span onclick="setStars(3)">★</span>
+                <span onclick="setStars(4)">★</span>
+                <span onclick="setStars(5)">★</span>
+              </div>
+              <textarea class="textarea" id="rating-comment" placeholder="留下你的评论（可选）..."></textarea>
+              <button class="btn btn-secondary btn-sm" onclick="submitRating()" style="align-self: flex-start;">
+                <i data-lucide="send"></i>提交评分
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel">
+            <div class="panel-head">
+              <span class="title-with-icon"><i data-lucide="bookmark"></i>相关推荐</span>
+            </div>
+            <div class="related-list" id="related-list"></div>
+          </div>
+
+          <div class="panel" style="margin-top: 16px;">
+            <div class="panel-head">
+              <span class="title-with-icon"><i data-lucide="bar-chart-3"></i>资源数据</span>
+            </div>
+            <div id="resource-stats"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ UPLOAD PAGE ============ -->
+    <section class="page" id="page-upload">
+      <div class="page-head">
+        <h1 class="page-title">上传学术资源</h1>
+        <p class="page-subtitle">分享你的学习资料，被下载、被点赞都能获得积分回报</p>
+      </div>
+
+      <div class="card">
+        <div class="form-grid">
+          <div class="form-row">
+            <label>资源文件</label>
+            <span class="help">支持 PDF / DOCX / PPTX / 图片，单文件最大 50MB</span>
+            <div class="dropzone" onclick="document.getElementById('upload-file-input').click()">
+              <input type="file" id="upload-file-input" style="display: none;" onchange="handleFileSelect(event)">
+              <i data-lucide="upload-cloud"></i>
+              <div id="dropzone-text">
+                <strong>点击或拖拽文件到此处</strong>
+                <span class="muted">或 <span class="browse-link">浏览本地文件</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>资源标题</label>
+            <input type="text" id="upload-title" placeholder="例如：Data Mining 2025 Final 完整答案">
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>课程代码</label>
+              <select class="select" id="upload-course">
+                <option value="BBAZ16604">BBAZ16604 · System Analysis & Design</option>
+                <option value="BBAZ16603">BBAZ16603 · Data Mining</option>
+                <option value="BBAZ16605">BBAZ16605 · Business Forecasting</option>
+                <option value="BBAZ16607">BBAZ16607 · E-Commerce</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>学年</label>
+              <select class="select" id="upload-year">
+                <option value="2026">2025-2026</option>
+                <option value="2025">2024-2025</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>资源类型</label>
+            <select class="select" id="upload-type">
+              <option value="LECTURE">课程讲义</option>
+              <option value="GUIDE">操作指南</option>
+              <option value="NOTES">课堂笔记</option>
+              <option value="PAST_PAPER">历年试卷</option>
+              <option value="ASSIGNMENT">作业答案</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label>关键词标签</label>
+            <span class="help">至少 2 个，逗号分隔</span>
+            <input type="text" id="upload-tags" placeholder="例如：课程讲义,期末复习,真题">
+          </div>
+
+          <div class="form-row">
+            <label>资源描述</label>
+            <textarea class="textarea" id="upload-description" rows="4" placeholder="描述资源来源、适合人群、使用方法等..."></textarea>
+          </div>
+
+          <div class="banner banner-success">
+            <i data-lucide="party-popper"></i>
+            <div>上传成功并通过审核后，你将获得 <strong>+10 积分</strong>奖励</div>
+          </div>
+
+          <div class="flex gap-2">
+            <button class="btn btn-primary" onclick="submitUpload()" id="upload-submit-btn">
+              <i data-lucide="upload"></i>提交上传
+            </button>
+            <button class="btn btn-secondary">
+              <i data-lucide="save"></i>保存草稿
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POINTS DASHBOARD ============ -->
+    <section class="page" id="page-points">
+      <div class="page-head">
+        <h1 class="page-title">积分中心</h1>
+        <p class="page-subtitle">通过分享学习资源、被同学下载、获得好评，赚取积分并兑换福利</p>
+      </div>
+
+      <div class="hero">
+        <div class="hero-stat">
+          <div class="label">当前积分余额</div>
+          <div class="value" id="hero-points">-</div>
+          <div class="sub" id="hero-rank">查询中...</div>
+        </div>
+        <div class="hero-stat">
+          <div class="label">下载次数额度</div>
+          <div class="value" id="hero-credits">-</div>
+          <div class="sub">兑换获得，永久有效</div>
+        </div>
+        <div class="hero-stat">
+          <div class="label">免费下载剩余</div>
+          <div class="value" id="hero-free">-</div>
+          <div class="sub" id="hero-free-sub">每日 0:00 重置</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <span class="title-with-icon"><i data-lucide="gift"></i>积分兑换</span>
+          </div>
+          <div class="redeem-card" onclick="redeem(50, 'DOWNLOAD_CREDIT_10')">
+            <div class="redeem-card-icon"><i data-lucide="download"></i></div>
+            <div class="redeem-card-info">
+              <div class="redeem-card-title">10 次额外下载次数</div>
+              <div class="redeem-card-desc">额外解锁 10 次免费下载，永久有效</div>
+            </div>
+            <div class="redeem-card-cost">50 pts</div>
+          </div>
+          <div class="redeem-card" onclick="alert('请先在搜索/详情页选择要置顶的资源，然后回来兑换')">
+            <div class="redeem-card-icon"><i data-lucide="pin"></i></div>
+            <div class="redeem-card-info">
+              <div class="redeem-card-title">资源置顶 7 天</div>
+              <div class="redeem-card-desc">需要先在资源详情页点击「置顶」按钮</div>
+            </div>
+            <div class="redeem-card-cost">100 pts</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span class="title-with-icon"><i data-lucide="trophy"></i>本月校园排行榜</span>
+          </div>
+          <div id="leaderboard"></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 16px;">
+        <div class="panel-head">
+          <span class="title-with-icon"><i data-lucide="receipt"></i>积分历史记录</span>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>类型</th>
+              <th>资源</th>
+              <th>积分变化</th>
+              <th>余额</th>
+            </tr>
+          </thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ PROFILE PAGE ============ -->
+    <section class="page" id="page-profile">
+      <div class="page-head">
+        <h1 class="page-title">个人中心</h1>
+        <p class="page-subtitle">管理你的资料和已上传资源</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="panel">
+          <div class="profile-card">
+            <div class="profile-avatar" id="profile-avatar">?</div>
+            <div class="profile-name" id="profile-name">-</div>
+            <div class="profile-id" id="profile-sid">学号：-</div>
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <div class="v" id="profile-uploads">-</div>
+                <div class="l">已上传</div>
+              </div>
+              <div class="profile-stat is-points">
+                <div class="v" id="profile-points">-</div>
+                <div class="l">积分</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span class="title-with-icon"><i data-lucide="folder"></i>我的上传</span>
+          </div>
+          <div class="related-list" id="profile-uploads-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ADMIN PAGE ============ -->
+    <section class="page" id="page-admin">
+      <div class="page-head">
+        <h1 class="page-title">管理员审核</h1>
+        <p class="page-subtitle">审批待审核的上传资源（管理员专用）</p>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <span class="title-with-icon"><i data-lucide="list-checks"></i>待审核队列</span>
+        </div>
+        <div id="admin-queue"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ TOAST + MODAL + STATUS ============ -->
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-icon"><i data-lucide="info" id="modal-lucide"></i></div>
+    <h3 id="modal-title">确认操作</h3>
+    <p id="modal-body"></p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" id="modal-confirm" onclick="confirmModal()">确认</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const API_BASE = (location.protocol === "file:")
+  ? "http://localhost:8000"
+  : location.origin;
+
+// ============================================================
+// STATE
+// ============================================================
+let authToken = localStorage.getItem("auth_token") || null;
+let currentUser = JSON.parse(localStorage.getItem("auth_user") || "null");
+let currentResourceDetail = null;
+let selectedStars = 0;
+let selectedUploadFile = null;
+let modalCallback = null;
+
+// ============================================================
+// API HELPERS
+// ============================================================
+async function api(path, options = {}) {
+  const headers = options.headers || {};
+  if (authToken) headers["Authorization"] = "Bearer " + authToken;
+  if (!(options.body instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
+  const res = await fetch(API_BASE + path, { ...options, headers });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Request failed" }));
+    throw new Error(err.detail || `${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
+async function checkAPI() {
+  try {
+    const res = await fetch(API_BASE + "/health");
+    if (res.ok) {
+      document.getElementById("api-status").className = "api-status online";
+      document.getElementById("api-status-text").textContent = "后端在线";
+      return true;
+    }
+  } catch (e) {}
+  document.getElementById("api-status").className = "api-status offline";
+  document.getElementById("api-status-text").textContent = "后端离线";
+  return false;
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+function switchAuth(mode) {
+  if (mode === "login") {
+    document.getElementById("tab-login").classList.add("active");
+    document.getElementById("tab-register").classList.remove("active");
+    document.getElementById("login-form").style.display = "block";
+    document.getElementById("register-form").style.display = "none";
+  } else {
+    document.getElementById("tab-login").classList.remove("active");
+    document.getElementById("tab-register").classList.add("active");
+    document.getElementById("login-form").style.display = "none";
+    document.getElementById("register-form").style.display = "block";
+  }
+}
+
+async function doLogin() {
+  const sid = document.getElementById("login-student-id").value.trim();
+  const pwd = document.getElementById("login-password").value;
+  if (!sid || !pwd) return showToast("请填写学号和密码", "error");
+  try {
+    const r = await api("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ student_id: sid, password: pwd }),
+    });
+    onLoginSuccess(r);
+  } catch (e) {
+    showToast("登录失败：" + e.message, "error");
+  }
+}
+
+async function doRegister() {
+  const sid = document.getElementById("reg-student-id").value.trim();
+  const password = document.getElementById("reg-password").value;
+  if (!sid || !password) return showToast("请填写学号和密码", "error");
+  if (sid.length < 8) return showToast("学号至少 8 位", "error");
+  if (password.length < 6) return showToast("密码至少 6 位", "error");
+  // Auto-derive username + email from student ID
+  const username = "同学" + sid.slice(-4);
+  const email = `${sid}@must.edu.mo`;
+  try {
+    const r = await api("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify({ student_id: sid, username, email, password }),
+    });
+    onLoginSuccess(r);
+  } catch (e) {
+    showToast("注册失败：" + e.message, "error");
+  }
+}
+
+function onLoginSuccess(r) {
+  authToken = r.access_token;
+  currentUser = r.user;
+  localStorage.setItem("auth_token", authToken);
+  localStorage.setItem("auth_user", JSON.stringify(currentUser));
+  showApp();
+  showToast("欢迎回来，" + currentUser.username, "success");
+}
+
+function doLogout() {
+  authToken = null;
+  currentUser = null;
+  localStorage.removeItem("auth_token");
+  localStorage.removeItem("auth_user");
+  document.getElementById("auth-screen").classList.add("active");
+  document.getElementById("app").style.display = "none";
+}
+
+function showApp() {
+  document.getElementById("auth-screen").classList.remove("active");
+  document.getElementById("app").style.display = "flex";
+
+  document.getElementById("topbar-username").textContent = currentUser.username;
+  document.getElementById("topbar-avatar").textContent = currentUser.username[0];
+  document.getElementById("topbar-points").innerHTML = `⭐ ${currentUser.points_balance} pts`;
+
+  if (currentUser.is_admin) {
+    document.getElementById("admin-tab").style.display = "flex";
+    document.getElementById("admin-section").style.display = "block";
+  }
+
+  document.getElementById("profile-avatar").textContent = currentUser.username[0];
+  document.getElementById("profile-name").textContent = currentUser.username;
+  document.getElementById("profile-sid").textContent = "学号：" + currentUser.student_id;
+  document.getElementById("profile-points").textContent = currentUser.points_balance;
+  document.getElementById("profile-uploads").textContent = currentUser.upload_count;
+
+  performSearch();
+  setTimeout(() => lucide.createIcons(), 50);
+}
+
+// ============================================================
+// SEARCH
+// ============================================================
+function showSkeleton() {
+  const c = document.getElementById("results");
+  c.innerHTML = '<div class="skeleton skeleton-card"></div>'.repeat(3);
+}
+
+async function performSearch() {
+  const params = new URLSearchParams();
+  const kw = document.getElementById("search-keyword").value.trim();
+  if (kw) params.append("keyword", kw);
+  const course = document.getElementById("filter-course").value;
+  if (course) params.append("course_code", course);
+  const year = document.getElementById("filter-year").value;
+  if (year) params.append("academic_year", year);
+  const type = document.getElementById("filter-type").value;
+  if (type) params.append("resource_type", type);
+  const minRating = parseFloat(document.getElementById("filter-rating").value);
+  if (minRating > 0) params.append("min_rating", minRating);
+
+  showSkeleton();
+  document.getElementById("results-count").innerHTML = '<span class="text-mute">搜索中...</span>';
+
+  const t0 = performance.now();
+  try {
+    const r = await api("/api/resources/search?" + params.toString());
+    const elapsed = (performance.now() - t0).toFixed(0);
+    document.getElementById("results-count").innerHTML =
+      `找到 <strong>${r.total}</strong> 条相关资源 · <span class="text-mute">${elapsed}ms · 按相关性排序</span>`;
+    renderResults(r.results);
+  } catch (e) {
+    document.getElementById("results-count").innerHTML = `<span style="color: var(--danger-500);">搜索失败：${e.message}</span>`;
+    document.getElementById("results").innerHTML = '';
+  }
+}
+
+function renderResults(list) {
+  const container = document.getElementById("results");
+  if (!list.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i data-lucide="search-x"></i>
+        <div class="title">没有找到匹配的资源</div>
+        <div class="desc">试试调整筛选条件或更换关键词</div>
+      </div>`;
+    lucide.createIcons();
+    return;
+  }
+  container.innerHTML = "";
+  list.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "result-item" + (r.pinned ? " pinned" : "");
+    const stars = "★".repeat(Math.round(r.avg_rating || 0)) + "☆".repeat(5 - Math.round(r.avg_rating || 0));
+    card.innerHTML = `
+      <div>
+        <div class="result-tags">
+          ${r.pinned ? '<span class="tag tag-pin"><i data-lucide="pin" style="width:11px;height:11px;"></i>置顶</span>' : ""}
+          <span class="tag tag-course">${r.course_code}</span>
+          <span class="tag tag-type">${typeLabel(r.resource_type)}</span>
+          <span class="tag tag-year">${r.academic_year-1}-${r.academic_year}</span>
+        </div>
+        <div class="result-title" onclick="goToDetail(${r.resource_id})">${escapeHtml(r.title)}</div>
+        <div class="result-desc">${escapeHtml(r.description || '')}</div>
+        <div class="result-stats">
+          <span><span class="stars">${stars}</span> ${r.avg_rating ? r.avg_rating.toFixed(1) : '—'}</span>
+          <span><i data-lucide="download"></i>${r.download_count}</span>
+          <span><i data-lucide="user"></i>${escapeHtml(r.uploader_name || '')}</span>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); confirmDownload(${r.resource_id}, '${escapeHtml(r.title).replace(/'/g, '')}')">
+          <i data-lucide="download"></i>下载 -1pt
+        </button>
+        <span class="relevance-badge">相关性 ${r.relevance_score}</span>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  lucide.createIcons();
+}
+
+function escapeHtml(s) {
+  if (!s) return "";
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function typeLabel(t) {
+  const map = { LECTURE: '课程讲义', GUIDE: '操作指南', NOTES: '课堂笔记', PAST_PAPER: '历年试卷', ASSIGNMENT: '作业答案', OTHER: '其他' };
+  return map[t] || t;
+}
+
+// ============================================================
+// DETAIL PAGE
+// ============================================================
+async function goToDetail(id) {
+  try {
+    const r = await api("/api/resources/" + id);
+    currentResourceDetail = r;
+    document.getElementById("detail-title").textContent = r.title;
+    const stars = "★".repeat(Math.round(r.avg_rating || 0)) + "☆".repeat(5 - Math.round(r.avg_rating || 0));
+    document.getElementById("detail-meta").innerHTML = `
+      <span class="tag tag-course">${r.course_code}</span>
+      <span class="tag tag-type">${typeLabel(r.resource_type)}</span>
+      <span class="tag tag-year">${r.academic_year-1}-${r.academic_year}</span>
+      <span><span class="stars">${stars}</span> ${r.avg_rating ? r.avg_rating.toFixed(1) : '—'}</span>
+    `;
+    document.getElementById("detail-description").textContent = r.description || "";
+    document.getElementById("detail-balance").textContent = currentUser.points_balance + " 积分";
+    document.getElementById("detail-dl-btn").innerHTML = `<i data-lucide="download"></i>下载 ${r.file_type} (${(r.file_size/1024/1024).toFixed(1)} MB)`;
+
+    document.getElementById("resource-stats").innerHTML = `
+      <div class="stat-row"><span class="label">下载次数</span><span class="value">${r.download_count}</span></div>
+      <div class="stat-row"><span class="label">上传时间</span><span class="value">${new Date(r.created_at).toLocaleDateString()}</span></div>
+      <div class="stat-row"><span class="label">文件大小</span><span class="value">${(r.file_size/1024/1024).toFixed(2)} MB</span></div>
+      <div class="stat-row"><span class="label">文件格式</span><span class="value">${r.file_type}</span></div>
+      <div class="stat-row"><span class="label">上传者</span><span class="value">${escapeHtml(r.uploader_name)}</span></div>
+    `;
+    const relList = document.getElementById("related-list");
+    relList.innerHTML = (r.related || []).map(rel => `
+      <div class="related-item" onclick="goToDetail(${rel.resource_id})">
+        <div class="ri-title">${escapeHtml(rel.title)}</div>
+        <div class="ri-meta">${rel.course_code} · ★${rel.avg_rating ? rel.avg_rating.toFixed(1) : '—'} · ${rel.download_count} 次下载</div>
+      </div>
+    `).join("") || '<div class="empty-state" style="padding: 20px;"><div class="desc">暂无相关资源</div></div>';
+
+    selectedStars = 0;
+    document.querySelectorAll("#star-input span").forEach(s => s.classList.remove("active"));
+    goToPage("detail");
+    setTimeout(() => lucide.createIcons(), 50);
+  } catch (e) {
+    showToast("加载详情失败：" + e.message, "error");
+  }
+}
+
+// ============================================================
+// DOWNLOAD
+// ============================================================
+function confirmDownload(id, title) {
+  showModal("确认下载",
+    `「${title}」\n本次下载将消耗 1 积分。若余额不足，将尝试使用每日免费额度。`,
+    async () => {
+      try {
+        const r = await api(`/api/resources/${id}/download`, { method: "POST" });
+        const fileRes = await fetch(API_BASE + r.download_url, {
+          headers: { "Authorization": "Bearer " + authToken }
+        });
+        const blob = await fileRes.blob();
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = r.file_name;
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(a.href);
+        a.remove();
+
+        currentUser.points_balance = r.new_balance;
+        document.getElementById("topbar-points").innerHTML = `⭐ ${r.new_balance} pts`;
+        const detB = document.getElementById("detail-balance");
+        if (detB) detB.textContent = `${r.new_balance} 积分`;
+        showToast(r.free_used
+          ? `已使用免费下载额度，余额：${r.new_balance}`
+          : `下载成功！消耗 ${r.points_charged} 积分，余额：${r.new_balance}`, "success");
+      } catch (e) {
+        showToast("下载失败：" + e.message, "error");
+      }
+    }
+  );
+}
+
+function downloadCurrentResource() {
+  if (currentResourceDetail) confirmDownload(currentResourceDetail.resource_id, currentResourceDetail.title);
+}
+
+// ============================================================
+// RATING
+// ============================================================
+function setStars(n) {
+  selectedStars = n;
+  document.querySelectorAll("#star-input span").forEach((s, i) => s.classList.toggle("active", i < n));
+}
+
+async function submitRating() {
+  if (!currentResourceDetail) return;
+  if (selectedStars === 0) return showToast("请先选择星级评分", "error");
+  const comment = document.getElementById("rating-comment").value.trim();
+  try {
+    await api("/api/ratings", {
+      method: "POST",
+      body: JSON.stringify({
+        resource_id: currentResourceDetail.resource_id,
+        stars: selectedStars,
+        comment: comment || null,
+      }),
+    });
+    showToast(`评分提交成功！${selectedStars}★`, "success");
+    document.getElementById("rating-comment").value = "";
+  } catch (e) {
+    showToast("提交失败：" + e.message, "error");
+  }
+}
+
+// ============================================================
+// UPLOAD
+// ============================================================
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 50 * 1024 * 1024) {
+    showToast("文件超过 50MB 限制", "error");
+    e.target.value = "";
+    return;
+  }
+  selectedUploadFile = file;
+  document.getElementById("dropzone-text").innerHTML =
+    `<strong>已选择：${escapeHtml(file.name)}</strong><span class="muted">${(file.size/1024/1024).toFixed(2)} MB</span>`;
+  if (!document.getElementById("upload-title").value) {
+    document.getElementById("upload-title").value = file.name.replace(/\.[^/.]+$/, "");
+  }
+}
+
+async function submitUpload() {
+  if (!selectedUploadFile) return showToast("请先选择要上传的文件", "error");
+  const title = document.getElementById("upload-title").value.trim();
+  if (title.length < 5) return showToast("标题至少 5 个字符", "error");
+  const tags = document.getElementById("upload-tags").value.trim();
+  if (tags.split(",").filter(t => t.trim()).length < 2) {
+    return showToast("至少需要 2 个标签（逗号分隔）", "error");
+  }
+
+  const fd = new FormData();
+  fd.append("file", selectedUploadFile);
+  fd.append("title", title);
+  fd.append("description", document.getElementById("upload-description").value);
+  fd.append("course_code", document.getElementById("upload-course").value);
+  fd.append("academic_year", document.getElementById("upload-year").value);
+  fd.append("resource_type", document.getElementById("upload-type").value);
+  fd.append("tags", tags);
+
+  showModal("确认上传",
+    `文件：${selectedUploadFile.name}\n标题：${title}\n\n资源将进入审核队列。审核通过后你将获得 +10 积分。`,
+    async () => {
+      const btn = document.getElementById("upload-submit-btn");
+      btn.disabled = true;
+      btn.innerHTML = '<i data-lucide="loader-2"></i>上传中...';
+      lucide.createIcons();
+      try {
+        const r = await fetch(API_BASE + "/api/resources/upload", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + authToken },
+          body: fd,
+        });
+        if (!r.ok) {
+          const err = await r.json().catch(() => ({ detail: "Upload failed" }));
+          throw new Error(err.detail || r.statusText);
+        }
+        const result = await r.json();
+        showToast(result.message, "success");
+        document.getElementById("upload-title").value = "";
+        document.getElementById("upload-description").value = "";
+        document.getElementById("upload-tags").value = "";
+        document.getElementById("dropzone-text").innerHTML = '<strong>点击或拖拽文件到此处</strong><span class="muted">或 <span class="browse-link">浏览本地文件</span></span>';
+        selectedUploadFile = null;
+        setTimeout(() => goToPage("points"), 1500);
+      } catch (e) {
+        showToast("上传失败：" + e.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i data-lucide="upload"></i>提交上传';
+        lucide.createIcons();
+      }
+    }
+  );
+}
+
+// ============================================================
+// POINTS
+// ============================================================
+async function loadPointsPage() {
+  try {
+    const balance = await api("/api/points/balance");
+    document.getElementById("hero-points").textContent = balance.points_balance;
+    document.getElementById("hero-credits").textContent = balance.download_credits;
+    const remaining = balance.free_downloads_today - balance.free_downloads_used;
+    document.getElementById("hero-free").textContent = remaining;
+    document.getElementById("hero-free-sub").textContent = `共 ${balance.free_downloads_today} 次/天`;
+
+    const history = await api("/api/points/history?limit=20");
+    const tb = document.getElementById("history-body");
+    tb.innerHTML = "";
+    history.forEach(h => {
+      const tr = document.createElement("tr");
+      const sign = h.points_delta >= 0 ? "+" : "";
+      const cls = h.points_delta >= 0 ? "delta-pos" : "delta-neg";
+      tr.innerHTML = `
+        <td>${new Date(h.created_at).toLocaleString()}</td>
+        <td>${actionTypeLabel(h.action_type)}</td>
+        <td>${escapeHtml(h.resource_title || '—')}</td>
+        <td class="${cls}">${sign}${h.points_delta}</td>
+        <td style="font-variant-numeric: tabular-nums; font-weight: 600;">${h.balance_after}</td>
+      `;
+      tb.appendChild(tr);
+    });
+
+    const lb = await api("/api/points/leaderboard?limit=10");
+    const lbDiv = document.getElementById("leaderboard");
+    lbDiv.innerHTML = "";
+    let myRank = null;
+    lb.forEach(row => {
+      const isMe = row.username === currentUser.username;
+      if (isMe) myRank = row.rank;
+      const rankClass = row.rank === 1 ? "r1" : row.rank === 2 ? "r2" : row.rank === 3 ? "r3" : "";
+      const div = document.createElement("div");
+      div.className = "lb-row" + (isMe ? " is-me" : "");
+      div.innerHTML = `
+        <div class="rank-badge ${rankClass}">${row.rank}</div>
+        <div class="lb-name">${escapeHtml(row.username)}${isMe ? "（你）" : ""}</div>
+        <div class="lb-pts">${row.monthly_earned} pts</div>
+      `;
+      lbDiv.appendChild(div);
+    });
+    document.getElementById("hero-rank").textContent = myRank ? `本月排名 #${myRank}` : "暂无排名";
+    setTimeout(() => lucide.createIcons(), 50);
+  } catch (e) {
+    showToast("加载积分页失败：" + e.message, "error");
+  }
+}
+
+function actionTypeLabel(t) {
+  const map = {
+    "UPLOAD_APPROVED": "上传通过",
+    "DOWNLOAD_RECEIVED": "资源被下载",
+    "RATING_RECEIVED": "资源被评分",
+    "SPEND_DOWNLOAD": "下载消耗",
+    "REDEEM_DOWNLOAD_CREDIT": "兑换下载次数",
+    "REDEEM_PIN": "兑换资源置顶",
+    "FREE_DOWNLOAD": "免费下载",
+    "WELCOME_BONUS": "🎉 注册奖励",
+  };
+  return map[t] || t;
+}
+
+async function redeem(cost, type) {
+  if (currentUser.points_balance < cost) {
+    showModal("积分不足", `本次兑换需要 ${cost} 积分，但你当前只有 ${currentUser.points_balance} 积分。`, null);
+    return;
+  }
+  const desc = type === "DOWNLOAD_CREDIT_10" ? "10 次额外下载次数" : "资源置顶 7 天";
+  showModal("确认兑换",
+    `本次兑换将消耗 ${cost} 积分获得「${desc}」。\n当前余额：${currentUser.points_balance}，兑换后：${currentUser.points_balance - cost}。`,
+    async () => {
+      try {
+        const r = await api("/api/points/redeem", {
+          method: "POST",
+          body: JSON.stringify({ reward_type: type }),
+        });
+        currentUser.points_balance = r.new_balance;
+        if (r.reward.new_total_credits !== undefined) {
+          currentUser.download_credits = r.reward.new_total_credits;
+        }
+        document.getElementById("topbar-points").innerHTML = `⭐ ${r.new_balance} pts`;
+        showToast(`兑换成功！获得「${desc}」`, "success");
+        loadPointsPage();
+      } catch (e) {
+        showToast("兑换失败：" + e.message, "error");
+      }
+    }
+  );
+}
+
+// ============================================================
+// PROFILE
+// ============================================================
+async function loadProfile() {
+  try {
+    const me = await api("/api/auth/me");
+    currentUser = me;
+    document.getElementById("profile-points").textContent = me.points_balance;
+    document.getElementById("profile-uploads").textContent = me.upload_count;
+    document.getElementById("topbar-points").innerHTML = `⭐ ${me.points_balance} pts`;
+
+    const list = await api("/api/resources");
+    const listDiv = document.getElementById("profile-uploads-list");
+    if (!list.length) {
+      listDiv.innerHTML = '<div class="empty-state" style="padding: 24px;"><i data-lucide="folder-x"></i><div class="title">还没有上传过资源</div><div class="desc">分享你的第一份资料赚积分吧</div></div>';
+    } else {
+      listDiv.innerHTML = list.map(r => `
+        <div class="related-item" onclick="goToDetail(${r.resource_id})">
+          <div class="ri-title">${escapeHtml(r.title)}</div>
+          <div class="ri-meta">${r.course_code} · ★${r.avg_rating ? r.avg_rating.toFixed(1) : '—'} · ${r.download_count} 次下载 · ${r.status}</div>
+        </div>
+      `).join("");
+    }
+    setTimeout(() => lucide.createIcons(), 50);
+  } catch (e) {
+    showToast("加载个人中心失败：" + e.message, "error");
+  }
+}
+
+// ============================================================
+// ADMIN
+// ============================================================
+async function loadAdmin() {
+  try {
+    const queue = await api("/api/admin/queue");
+    const div = document.getElementById("admin-queue");
+    if (!queue.length) {
+      div.innerHTML = '<div class="empty-state"><i data-lucide="check-circle-2"></i><div class="title">没有待审核的资源</div><div class="desc">所有上传都已处理完毕</div></div>';
+    } else {
+      div.innerHTML = queue.map(r => `
+        <div class="result-item">
+          <div>
+            <div class="result-title">${escapeHtml(r.title)}</div>
+            <div class="result-stats">
+              <span class="tag tag-course">${r.course_code}</span>
+              <span><i data-lucide="user"></i>${escapeHtml(r.uploader_name)}</span>
+              <span><i data-lucide="clock"></i>${new Date(r.created_at).toLocaleString()}</span>
+            </div>
+          </div>
+          <div class="result-actions" style="flex-direction: row;">
+            <button class="btn btn-success btn-sm" onclick="reviewResource(${r.resource_id}, 'APPROVE')">
+              <i data-lucide="check"></i>通过
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="reviewResource(${r.resource_id}, 'REJECT')">
+              <i data-lucide="x"></i>拒绝
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+    setTimeout(() => lucide.createIcons(), 50);
+  } catch (e) {
+    showToast("加载审核队列失败：" + e.message, "error");
+  }
+}
+
+async function reviewResource(id, decision) {
+  let reason = null;
+  if (decision === "REJECT") {
+    reason = prompt("拒绝原因（必填）：");
+    if (!reason) return;
+  }
+  try {
+    await api(`/api/admin/resources/${id}/review`, {
+      method: "PATCH",
+      body: JSON.stringify({ decision, rejection_reason: reason }),
+    });
+    showToast(`资源已${decision === "APPROVE" ? "通过审核" : "拒绝"}`, "success");
+    loadAdmin();
+  } catch (e) {
+    showToast("操作失败：" + e.message, "error");
+  }
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goToPage(name, navEl) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("page-" + name).classList.add("active");
+  if (navEl) {
+    document.querySelectorAll(".nav-item").forEach(a => a.classList.remove("active"));
+    navEl.classList.add("active");
+  } else {
+    const link = document.querySelector(`.nav-item[data-page="${name}"]`);
+    if (link) {
+      document.querySelectorAll(".nav-item").forEach(a => a.classList.remove("active"));
+      link.classList.add("active");
+    }
+  }
+  window.scrollTo(0, 0);
+  if (name === "points") loadPointsPage();
+  if (name === "profile") loadProfile();
+  if (name === "admin") loadAdmin();
+  setTimeout(() => lucide.createIcons(), 50);
+}
+
+// ============================================================
+// MODAL & TOAST
+// ============================================================
+let _toastHideTimer = null;
+function showToast(msg, kind = "default") {
+  const t = document.getElementById("toast");
+  const icons = { success: "check-circle-2", error: "alert-circle", default: "info" };
+  // Cancel any pending hide timer (重复触发时不会让旧 timer 提前/延后误清)
+  if (_toastHideTimer) { clearTimeout(_toastHideTimer); _toastHideTimer = null; }
+  t.innerHTML = `<i data-lucide="${icons[kind] || icons.default}"></i>${msg}`;
+  t.className = "toast" + (kind !== "default" ? " " + kind : "");
+  // 让浏览器渲染初始位置后再加 show（触发滑入动画）
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => t.classList.add("show"));
+  });
+  lucide.createIcons();
+  _toastHideTimer = setTimeout(() => {
+    t.classList.remove("show");
+    _toastHideTimer = null;
+  }, 3300);
+}
+// 兜底：点击 toast 立刻关闭
+document.addEventListener('DOMContentLoaded', () => {
+  const t = document.getElementById('toast');
+  if (t) t.addEventListener('click', () => {
+    t.classList.remove('show');
+    if (_toastHideTimer) { clearTimeout(_toastHideTimer); _toastHideTimer = null; }
+  });
+});
+
+function showModal(title, body, callback) {
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-body").innerHTML = escapeHtml(body).replace(/\n/g, "<br>");
+  document.getElementById("modal-overlay").classList.add("show");
+  modalCallback = callback;
+  lucide.createIcons();
+}
+
+function closeModal() {
+  document.getElementById("modal-overlay").classList.remove("show");
+  modalCallback = null;
+}
+
+function confirmModal() {
+  if (modalCallback) modalCallback();
+  closeModal();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+(async () => {
+  lucide.createIcons();
+  const online = await checkAPI();
+  if (!online) {
+    showToast("后端 API 离线 (" + API_BASE + ")。请先启动后端。", "error");
+  }
+  if (authToken && currentUser) {
+    try {
+      const me = await api("/api/auth/me");
+      currentUser = me;
+      showApp();
+    } catch (e) {
+      doLogout();
+    }
+  }
+})();
+</script>
+</body>
+</html>

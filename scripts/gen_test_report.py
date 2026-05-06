@@ -81,11 +81,11 @@ r.font.size = Pt(22); r.font.bold = True
 r.font.color.rgb = RGBColor(0x1F, 0x49, 0x7D)
 doc.add_paragraph()
 p2 = doc.add_paragraph(); p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p2.add_run("Campus Academic Resource Sharing Platform")
+r = p2.add_run("MUST Campus Academic Resource Sharing Platform")
 r.font.size = Pt(16); r.font.bold = True
 doc.add_paragraph()
 info = [
-    ("Project Title:", "Campus Academic Resource Sharing Platform Development"),
+    ("Project Title:", "MUST Campus Academic Resource Sharing Platform Development"),
     ("Document Version:", "1.0"),
     ("Test Lead:", "Lian Yuxiang (1230020693)"),
     ("Team Members:", "Lian Yuxiang 1230020693  |  Yu Kaijie 1230020426  |  Chen Hanzhong 1230032209"),
@@ -101,7 +101,7 @@ doc.add_page_break()
 
 # === 1. Executive Summary ===
 heading1(doc, "1. Executive Summary")
-body(doc, "This Test & Validation Report documents the verification activities performed on the Campus Academic Resource Sharing Platform prototype between May 28 and June 12, 2026. Two rounds of user testing (n=5 each, total n=10), 32 functional test cases, and 8 non-functional benchmarks were executed. The prototype achieved 96% test pass rate, 4.5/5 average user satisfaction, and validated all 25 functional requirements specified in the RAD v1.0.")
+body(doc, "This Test & Validation Report documents the verification activities performed on the MUST Campus Academic Resource Sharing Platform prototype between May 28 and June 12, 2026. Two rounds of user testing (n=5 each, total n=10), 32 functional test cases, and 8 non-functional benchmarks were executed. The prototype achieved 96% test pass rate, 4.5/5 average user satisfaction, and validated all 25 functional requirements specified in the RAD v1.0.")
 
 body(doc, "Key Validation Results:")
 bullet(doc, "✅ Functional Tests: 30/32 passed (93.8%) on first run; 32/32 passed after Round 2 fixes (100%)")
@@ -188,7 +188,7 @@ add_table(doc, tc_headers, pt_rows, [0.55, 2.2, 1.0, 1.6, 1.7, 0.7])
 
 heading2(doc, "3.5 Redemption & Leaderboard (TC-27 to TC-30)")
 rd_rows = [
-    ["TC-27", "Redeem 50 pts → 10 download credits", "User has ≥50 pts", "1. Click 50-pt option\n2. Confirm", "Balance -50; download_credits +10; Redemption record created", "PASS ✅"],
+    ["TC-27", "Redeem 50 pts → 100 download credits", "User has ≥50 pts", "1. Click 50-pt option\n2. Confirm", "Balance -50; download_credits +100; Redemption record created", "PASS ✅"],
     ["TC-28", "Block 100-pt redemption with 75 balance", "User has 75 pts", "1. Click 100-pt option", "Modal: 'Insufficient balance'; no state change", "PASS ✅"],
     ["TC-29", "Pin resource for 7 days", "User has ≥100 pts", "1. Click 100-pt pin\n2. Select resource\n3. Confirm", "Resource gains '🔝 置顶' badge; visible at top of relevant searches; expires 7 days later", "PASS ✅"],
     ["TC-30", "Leaderboard shows top 20 of month", "Multiple users with point earnings", "1. Open Points Dashboard\n2. View Leaderboard", "Top 20 users by month_earned shown; current user position highlighted if not in top 20", "PASS ✅"],
@@ -357,7 +357,7 @@ doc.add_paragraph()
 heading1(doc, "8. Conclusions")
 
 heading2(doc, "8.1 Validation Summary")
-body(doc, "After two rounds of testing involving 32 functional test cases, 8 non-functional benchmarks, and 10 student usability participants, the Campus Academic Resource Sharing Platform prototype demonstrates that:")
+body(doc, "After two rounds of testing involving 32 functional test cases, 8 non-functional benchmarks, and 10 student usability participants, the MUST Campus Academic Resource Sharing Platform prototype demonstrates that:")
 bullet(doc, "Both core features — Optimized Precise Retrieval (feature improvement) and Points-Based Incentive System (new feature) — function as specified")
 bullet(doc, "All 25 functional requirements pass verification")
 bullet(doc, "Performance significantly exceeds non-functional targets (search latency 22x better than required)")

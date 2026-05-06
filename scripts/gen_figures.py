@@ -1,9 +1,10 @@
 """
-Generate 4 PNG diagrams used by Campus_Resource_Platform_Report.docx:
-  Figure 1: Feature overview Mind-Map
-  Figure 2: DFD - Smart Academic Resource Retrieval
-  Figure 3: DFD - Points & Rewards System
-  Figure 4: DFD - AI-assisted Recommendation (v2.0)
+Generate 5 PNG diagrams used by Campus_Resource_Platform_Report.docx:
+  Figure 1: Feature overview Mind-Map (1.4)
+  Figure 2: DFD - Smart Resource Retrieval (2.1.4)
+  Figure 3: DFD - Upload & Review System (2.2.4)
+  Figure 4: DFD - Points & Reward System (2.3.4)
+  Figure 5: DFD - AI-assisted Recommendation (3.1.3, v2.0)
 
 Style mirrors the sample.pdf DFDs (yellow fills, schematic arrows).
 """
@@ -24,7 +25,7 @@ TEXT_COLOR = '#000000'
 ACCENT = '#1F497D'
 EDGE = '#666666'
 
-plt.rcParams['font.family'] = ['Hiragino Sans GB', 'PingFang HK', 'Heiti TC', 'Songti SC', 'Arial', 'sans-serif']
+plt.rcParams['font.family'] = ['Arial', 'Helvetica', 'DejaVu Sans', 'sans-serif']
 plt.rcParams['font.size'] = 10
 plt.rcParams['axes.unicode_minus'] = False
 
@@ -106,8 +107,8 @@ center = FancyBboxPatch((cx-1.4, cy-0.6), 2.8, 1.2,
                        boxstyle="round,pad=0.04",
                        linewidth=2, edgecolor=ACCENT, facecolor=ACCENT)
 ax.add_patch(center)
-ax.text(cx, cy, "Campus Resource\nPlatform",
-        ha='center', va='center', fontsize=13, fontweight='bold', color='white')
+ax.text(cx, cy, "MUST Campus\nResource\nPlatform",
+        ha='center', va='center', fontsize=12, fontweight='bold', color='white')
 
 branches = [
     ("Smart Search",
@@ -227,10 +228,66 @@ print("✓ fig2_dfd_retrieval.png")
 
 
 # ==================================================================
-# FIGURE 3 — DFD: Points & Rewards System
+# FIGURE 3 — DFD: Upload & Review System
 # ==================================================================
 fig, ax = setup_axes((11.5, 6.5),
-                     "Figure 3.  DFD — Points & Rewards System")
+                     "Figure 3.  DFD — Upload & Review System")
+
+# Student entity
+box(ax, 0.5, 5.5, 1.6, 1.0, "Student\n(Uploader)", fontsize=10, bold=True)
+
+# Admin entity
+box(ax, 0.5, 0.7, 1.6, 1.0, "Admin\nReviewer", fontsize=10, bold=True)
+
+# Process 1: Upload Handler (validate)
+proc(ax, 3.0, 5.5, 2.4, 1.0, "1", "Validate File\n+ Metadata")
+
+# Process 2: Create Pending Row
+proc(ax, 6.5, 5.5, 2.4, 1.0, "2", "Create Pending\nResource Row")
+
+# Process 3: Review Queue
+proc(ax, 6.5, 3.0, 2.4, 1.0, "3", "Review Queue\n(Approve / Reject)")
+
+# Process 4: Publish + Reward
+proc(ax, 9.5, 5.5, 2.2, 1.0, "4", "Publish &\nCredit +10")
+
+# Process 5: Notify
+proc(ax, 3.0, 1.0, 2.4, 1.0, "5", "Notify\nUploader")
+
+# Data stores
+store(ax, 6.5, 1.5, 2.4, 0.6, "D1", "Resources")
+store(ax, 9.5, 3.0, 2.2, 0.6, "D2", "PointRecord")
+store(ax, 9.5, 1.5, 2.2, 0.6, "D3", "Object\nStorage")
+
+# Arrows
+arrow(ax, 2.1, 6.0, 3.0, 6.0, "file + meta")
+arrow(ax, 5.4, 6.0, 6.5, 6.0, "valid → PENDING")
+arrow(ax, 8.9, 5.7, 9.5, 5.7, "approve")
+arrow(ax, 7.7, 5.5, 7.7, 4.0, "queue", lw=1, color='#888888')
+arrow(ax, 6.5, 3.5, 2.1, 1.5, "reject + reason", color='#B45309')
+arrow(ax, 1.5, 1.7, 6.5, 3.5, "decision", color=ACCENT)
+arrow(ax, 8.9, 3.5, 9.5, 3.3, "audit row", lw=1, color='#888888')
+arrow(ax, 8.0, 3.0, 7.7, 2.1, "status update", lw=1, color='#888888')
+arrow(ax, 10.6, 5.5, 10.6, 2.1, "stored file", lw=1, color='#888888')
+arrow(ax, 4.2, 5.5, 4.2, 2.0, "→ notify", lw=1, color='#888888')
+arrow(ax, 3.0, 1.5, 2.1, 5.7, "✓ published / ✗ rejected", color='#B45309')
+
+ax.text(0.5, 0.1,
+        "● Entity (yellow)   ● Process (numbered)   ● Data store (gray, D-code)   ● Admin gate prevents low-quality / copyright resources",
+        fontsize=8, color='#666666', style='italic')
+
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, 'fig3_dfd_upload.png'),
+            dpi=180, bbox_inches='tight', facecolor='white')
+plt.close()
+print("✓ fig3_dfd_upload.png")
+
+
+# ==================================================================
+# FIGURE 4 — DFD: Points & Reward System
+# ==================================================================
+fig, ax = setup_axes((11.5, 6.5),
+                     "Figure 4.  DFD — Points & Reward System")
 
 # User entity
 box(ax, 0.5, 3.0, 1.6, 1.0, "User", fontsize=11, bold=True)
@@ -280,17 +337,17 @@ ax.text(0.5, 0.1, "● Entity (yellow)   ● Process (numbered)   ● Data store
         fontsize=8, color='#666666', style='italic')
 
 plt.tight_layout()
-plt.savefig(os.path.join(OUT_DIR, 'fig3_dfd_points.png'),
+plt.savefig(os.path.join(OUT_DIR, 'fig4_dfd_points.png'),
             dpi=180, bbox_inches='tight', facecolor='white')
 plt.close()
-print("✓ fig3_dfd_points.png")
+print("✓ fig4_dfd_points.png")
 
 
 # ==================================================================
-# FIGURE 4 — DFD: AI-assisted Recommendation (v2.0)
+# FIGURE 5 — DFD: AI-assisted Recommendation (v2.0)
 # ==================================================================
 fig, ax = setup_axes((11.5, 6.5),
-                     "Figure 4.  DFD — AI-assisted Recommendation (v2.0)")
+                     "Figure 5.  DFD — AI-assisted Recommendation (v2.0)")
 
 # User
 box(ax, 0.5, 3.0, 1.6, 1.0, "User", fontsize=11, bold=True)
@@ -335,10 +392,10 @@ ax.text(0.5, 0.4,
         fontsize=8, color='#666666', style='italic')
 
 plt.tight_layout()
-plt.savefig(os.path.join(OUT_DIR, 'fig4_dfd_recommendation.png'),
+plt.savefig(os.path.join(OUT_DIR, 'fig5_dfd_recommendation.png'),
             dpi=180, bbox_inches='tight', facecolor='white')
 plt.close()
-print("✓ fig4_dfd_recommendation.png")
+print("✓ fig5_dfd_recommendation.png")
 
 
 print(f"\n✅ All figures saved to {OUT_DIR}/")

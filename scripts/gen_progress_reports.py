@@ -101,11 +101,11 @@ def cover_block(doc, title, version, date_str):
     doc.add_paragraph()
     p2 = doc.add_paragraph()
     p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = p2.add_run("Campus Academic Resource Sharing Platform")
+    r = p2.add_run("MUST Campus Academic Resource Sharing Platform")
     r.font.size = Pt(16); r.font.bold = True
     doc.add_paragraph()
     info = [
-        ("Project Title:", "Campus Academic Resource Sharing Platform Development"),
+        ("Project Title:", "MUST Campus Academic Resource Sharing Platform Development"),
         ("Document Version:", version),
         ("Project Manager:", "Lian Yuxiang (1230020693)"),
         ("Team Members:", "Lian Yuxiang 1230020693  |  Yu Kaijie 1230020426  |  Chen Hanzhong 1230032209"),
@@ -130,7 +130,7 @@ doc = setup_doc()
 cover_block(doc, "PROGRESS REPORT #1", "1.0", "April 18, 2026 (Week 7)")
 
 heading1(doc, "1. Executive Summary")
-body(doc, "This is the first formal progress report for the Campus Academic Resource Sharing Platform project, covering Weeks 1-7 (March 14 – April 18, 2026). The team has completed two of the eight major deliverables on schedule: the Project Charter (Week 1) and the Requirements Analysis Document (Week 5). Stakeholder research was conducted ahead of plan, providing a solid foundation for the upcoming System Design phase. The project remains on schedule with no material risks materialized.")
+body(doc, "This is the first formal progress report for the MUST Campus Academic Resource Sharing Platform project, covering Weeks 1-7 (March 14 – April 18, 2026). The team has completed two of the eight major deliverables on schedule: the Project Charter (Week 1) and the Requirements Analysis Document (Week 5). Stakeholder research was conducted ahead of plan, providing a solid foundation for the upcoming System Design phase. The project remains on schedule with no material risks materialized.")
 
 body(doc, "Key Achievements:")
 bullet(doc, "✅ Project Charter approved by lecturer on March 15, 2026")
@@ -313,7 +313,7 @@ bullet(doc, "Stage 2 (Week 11): High-fidelity interactive prototype with realist
 
 body(doc, "Prototype features:")
 bullet(doc, "Feature Improvement (Optimized Precise Retrieval): Search with multi-dimensional filtering (course code dropdown, year, type, min rating slider); ranked results with relevance score, preview snippet, rating, download count; resource detail page with related-resources carousel")
-bullet(doc, "New Feature (Points-Based Incentive System): Points dashboard with balance, monthly summary, full transaction history; redemption options (50 pts → 10 downloads, 100 pts → 7-day pin); leaderboard widget showing top 20 contributors of the month; in-app notification on points-earning events")
+bullet(doc, "New Feature (Points-Based Incentive System): Points dashboard with balance, monthly summary, full transaction history; redemption options (50 pts → 100 downloads, 100 pts → 7-day pin); leaderboard widget showing top 20 contributors of the month; in-app notification on points-earning events")
 bullet(doc, "Cross-feature: Upload flow with metadata form and admin review notification; rating widget on resource detail page that triggers points award sequence")
 
 heading2(doc, "3.4 User Testing Round 1 (Week 13)")

@@ -85,11 +85,11 @@ r.font.color.rgb = RGBColor(0x1F, 0x49, 0x7D)
 doc.add_paragraph()
 p2 = doc.add_paragraph()
 p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p2.add_run("Campus Academic Resource Sharing Platform")
+r = p2.add_run("MUST Campus Academic Resource Sharing Platform")
 r.font.size = Pt(16); r.font.bold = True
 doc.add_paragraph()
 info = [
-    ("Project Title:", "Campus Academic Resource Sharing Platform Development"),
+    ("Project Title:", "MUST Campus Academic Resource Sharing Platform Development"),
     ("Document Version:", "1.0"),
     ("Prototype File:", "Prototype.html (interactive)"),
     ("Team Members:", "Lian Yuxiang 1230020693  |  Yu Kaijie 1230020426  |  Chen Hanzhong 1230032209"),
@@ -107,7 +107,7 @@ doc.add_page_break()
 # === 1. Introduction ===
 heading1(doc, "1. Introduction")
 heading2(doc, "1.1 Purpose")
-body(doc, "This document specifies the high-fidelity interactive prototype for the Campus Academic Resource Sharing Platform. The prototype, delivered as a single interactive HTML file (Prototype.html), demonstrates the user experience of all six core screens and validates the requirements (RAD v1.0) and design (SDD v1.0). It serves as the basis for user testing and the final live demonstration.")
+body(doc, "This document specifies the high-fidelity interactive prototype for the MUST Campus Academic Resource Sharing Platform. The prototype, delivered as a single interactive HTML file (Prototype.html), demonstrates the user experience of all six core screens and validates the requirements (RAD v1.0) and design (SDD v1.0). It serves as the basis for user testing and the final live demonstration.")
 
 heading2(doc, "1.2 Prototype Delivery")
 bullet(doc, "Format: Single self-contained HTML file (Prototype.html), no external dependencies, runs in any modern browser")
@@ -222,7 +222,7 @@ bullet(doc, "8 history rows showcase all action types: 资源被下载 (+2), 资
 heading3(doc, "Interactions Implemented")
 i4_headers = ["User Action", "System Response", "FR Mapped"]
 i4_rows = [
-    ["Click '50 pts → 10 次额外下载'", "Modal: '本次兑换将消耗 50 积分... 当前余额：75，兑换后：25。确认兑换？' → confirm → deduct → toast", "FR-15"],
+    ["Click '50 pts → 100 次额外下载'", "Modal: '本次兑换将消耗 50 积分... 当前余额：75，兑换后：25。确认兑换？' → confirm → deduct → toast", "FR-15"],
     ["Click '100 pts → 资源置顶 7 天'", "Modal: '本次兑换将消耗 100 积分... 当前余额：75'. Insufficient → modal blocks confirmation", "FR-16"],
     ["Visual: 'Your' row in leaderboard", "Highlighted with yellow background, indicating user position", "FR-17"],
     ["Visual: history table with color coding", "Green +X for earnings, Red -X for spending — provides full transparency (FR-18)", "FR-18"],
@@ -279,7 +279,7 @@ cov_rows = [
     ["FR-12", "+2 pts on download received", "Points Page (history)", "✅ Visible in history table"],
     ["FR-13", "+1 pt on rating received", "Points Page (history)", "✅ Visible in history table"],
     ["FR-14", "-5 pts per download / 3 free daily", "Search + Detail + Hero", "✅ Modal confirmation + free downloads counter"],
-    ["FR-15", "Redeem 50 pts → 10 downloads", "Points Page", "✅ Interactive redemption with state update"],
+    ["FR-15", "Redeem 50 pts → 100 downloads", "Points Page", "✅ Interactive redemption with state update"],
     ["FR-16", "Redeem 100 pts → 7-day pin", "Points Page + Search Page", "✅ Pin badge visible on top result"],
     ["FR-17", "Monthly leaderboard top 20", "Points Page (sidebar)", "✅ Top 5 + user position rendered"],
     ["FR-18", "Points history transparency", "Points Page", "✅ Full table with delta + balance"],
@@ -311,7 +311,7 @@ walk_rows = [
     ["6", "Navigate to '上传资源'", "Walk through metadata form briefly (title, course, type, tags)", "2:15-3:00"],
     ["7", "Click '提交上传'", "Modal explains the +10 pts reward → confirm → auto-redirect to Points page", "3:00-3:30"],
     ["8", "On Points Dashboard", "Hero banner with 70 pts balance → scroll through history table → highlight color coding", "3:30-4:15"],
-    ["9", "Click '50 pts → 10 次额外下载'", "Modal confirmation → after redemption, balance drops to 20", "4:15-4:45"],
+    ["9", "Click '50 pts → 100 次额外下载'", "Modal confirmation → after redemption, balance drops to 20", "4:15-4:45"],
     ["10", "Try 100 pts redemption (insufficient)", "System gracefully blocks with insufficient-balance modal — demonstrates FR-14 safety", "4:45-5:00"],
 ]
 add_table(doc, walkthrough_headers, walk_rows, [0.5, 2.4, 2.7, 0.8])

@@ -163,7 +163,7 @@ def redeem(
     Returns (new_balance, reward_info).
 
     Supported reward_type:
-    - DOWNLOAD_CREDIT_10: 50 pts -> +10 download_credits
+    - DOWNLOAD_CREDIT_10: 50 pts -> +100 download_credits
     - PIN_7DAYS: 100 pts -> resource pinned for 7 days (resource_id required)
     """
     if reward_type == "DOWNLOAD_CREDIT_10":
@@ -186,7 +186,7 @@ def redeem(
             .where(User.user_id == user_id, User.points_balance >= cost)
             .values(
                 points_balance=User.points_balance - cost,
-                download_credits=User.download_credits + 10,
+                download_credits=User.download_credits + 100,
             )
         )
     else:
@@ -213,7 +213,7 @@ def redeem(
     reward_info = {"type": reward_db_type, "cost": cost}
 
     if reward_type == "DOWNLOAD_CREDIT_10":
-        reward_info["download_credits_added"] = 10
+        reward_info["download_credits_added"] = 100
         reward_info["new_total_credits"] = user.download_credits
     elif reward_type == "PIN_7DAYS":
         expires_at = datetime.utcnow() + timedelta(days=7)

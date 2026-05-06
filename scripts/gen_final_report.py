@@ -98,7 +98,7 @@ p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
 r = p.add_run("校园学术资源共享平台"); r.font.size = Pt(22); r.font.bold = True
 r.font.color.rgb = RGBColor(0x2E, 0x74, 0xB5)
 p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p.add_run("Campus Academic Resource Sharing Platform"); r.font.size = Pt(16); r.font.color.rgb = RGBColor(0x2E, 0x74, 0xB5)
+r = p.add_run("MUST Campus Academic Resource Sharing Platform"); r.font.size = Pt(16); r.font.color.rgb = RGBColor(0x2E, 0x74, 0xB5)
 
 doc.add_paragraph()
 p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -114,7 +114,7 @@ info_pairs = [
     ("Course", "BBAZ16604 - System Analysis and Design"),
     ("Lecturer", "Dr. CHE Pak Hou (Howard)"),
     ("Term", "Spring 2026"),
-    ("GitHub Repository", "https://github.com/a2318491287-design/campus-resource-platform"),
+    ("GitHub Repository", "https://github.com/a2318491287-design/must-campus-resource-platform"),
     ("Live URL", "https://signing-isle-printed-shapes.trycloudflare.com"),
 ]
 table = doc.add_table(rows=len(info_pairs), cols=2)
@@ -217,7 +217,7 @@ doc.add_page_break()
 # ========== EXECUTIVE SUMMARY ==========
 heading1(doc, "Executive Summary")
 
-body(doc, "This Final Project Report documents the complete journey of the Campus Academic Resource Sharing Platform — a 16-week System Analysis and Design course project undertaken by a 3-person team between March 14 and June 20, 2026. The project addressed a documented and validated student pain point: the fragmented, inefficient, and low-incentive landscape of academic resource sharing on university campuses.")
+body(doc, "This Final Project Report documents the complete journey of the MUST Campus Academic Resource Sharing Platform — a 16-week System Analysis and Design course project undertaken by a 3-person team between March 14 and June 20, 2026. The project addressed a documented and validated student pain point: the fragmented, inefficient, and low-incentive landscape of academic resource sharing on university campuses.")
 
 body(doc, "The team investigated this problem through a survey of 47 students and 8 in-depth interviews, which revealed that students spend an average of 38 minutes per session searching for academic materials across multiple platforms, with 82% reporting frequent difficulty in finding relevant resources. To address these findings, the team designed and prototyped two complementary features: an optimized precise retrieval module that supports multi-dimensional filtering by course code, academic year, resource type, and quality rating; and a points-based incentive system that rewards students for sharing high-quality materials.")
 
@@ -383,7 +383,7 @@ heading2(doc, "4.3 Feature 2 — Points-Based Incentive System")
 body(doc, "The Points Dashboard is the central demonstration of the project's new feature. The page is structured around three visual zones:")
 
 bullet(doc, "Hero Banner: gradient background with three large-scale statistics — Current Balance (75 pts), Monthly Earned (42 pts), and Free Downloads Remaining (2 of 3 today, resetting at midnight)")
-bullet(doc, "Two-Column Mid-Section: Redemption Options (50 pts → 10 download credits, 100 pts → 7-day resource pin) on the left; Monthly Leaderboard top 5 plus the user's position highlighted in yellow at rank #18 on the right")
+bullet(doc, "Two-Column Mid-Section: Redemption Options (50 pts → 100 download credits, 100 pts → 7-day resource pin) on the left; Monthly Leaderboard top 5 plus the user's position highlighted in yellow at rank #18 on the right")
 bullet(doc, "Full-Width Bottom: Complete points transaction history with date, action type, related resource, color-coded delta (green for earnings, red for spending), and running balance")
 
 body_no_indent(doc, "Critical interaction flows demonstrated:")
@@ -528,7 +528,7 @@ body(doc, "Beyond the technical artifacts, the project provided practical experi
 
 body(doc, "The project's most important insight is methodological: design decisions improve dramatically when they are grounded in user data and tested against real users early. The 38-minute baseline, the 76% sharing-willingness figure, and the 89% course-code-filtering preference each shaped a specific, defensible design choice. The Round 1 to Round 2 task time reduction (61s → 42s, a 31% improvement) demonstrates that even modest investment in iterative testing produces measurable user value.")
 
-body(doc, "We thank Dr. CHE Pak Hou for guidance throughout the project, the 47 survey respondents and 8 interview participants for their candor, and the 10 usability testing volunteers whose feedback directly shaped the final prototype. The complete project archive is submitted to Moodle alongside this report. The full source code, design documents, and project management history are also publicly available at https://github.com/a2318491287-design/campus-resource-platform — including 8 closed Issues showing the phase-by-phase task management workflow used throughout the project lifecycle.")
+body(doc, "We thank Dr. CHE Pak Hou for guidance throughout the project, the 47 survey respondents and 8 interview participants for their candor, and the 10 usability testing volunteers whose feedback directly shaped the final prototype. The complete project archive is submitted to Moodle alongside this report. The full source code, design documents, and project management history are also publicly available at https://github.com/a2318491287-design/must-campus-resource-platform — including 8 closed Issues showing the phase-by-phase task management workflow used throughout the project lifecycle.")
 
 doc.add_page_break()
 
@@ -581,7 +581,7 @@ body_no_indent(doc, "")
 body_no_indent(doc, "All files have been compressed into SAD_Project_Submission.zip and submitted to the course Moodle page.")
 body_no_indent(doc, "")
 body_no_indent(doc, "The complete project is also publicly available on GitHub:")
-body_no_indent(doc, "    https://github.com/a2318491287-design/campus-resource-platform")
+body_no_indent(doc, "    https://github.com/a2318491287-design/must-campus-resource-platform")
 body_no_indent(doc, "")
 body_no_indent(doc, "The repository serves as our project management evidence (per the BBAZ16604 requirement to use software for managing the group). It contains:")
 bullet(doc, "All source code (FastAPI backend + interactive HTML prototype + 8 documentation generation scripts)")
@@ -631,7 +631,7 @@ add_table(doc, acronyms_headers, acronyms_rows, [2.0, 4.5])
 
 doc.add_paragraph()
 doc.add_paragraph()
-footer = doc.add_paragraph("End of Final Project Report  ·  Version 1.0  ·  June 20, 2026  ·  Campus Academic Resource Sharing Platform")
+footer = doc.add_paragraph("End of Final Project Report  ·  Version 1.0  ·  June 20, 2026  ·  MUST Campus Academic Resource Sharing Platform")
 footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
 footer.runs[0].font.size = Pt(10)
 footer.runs[0].font.bold = True

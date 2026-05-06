@@ -119,13 +119,13 @@ r.font.color.rgb = RGBColor(0x1F, 0x49, 0x7D)
 doc.add_paragraph()
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p.add_run("Campus Academic Resource Sharing Platform")
+r = p.add_run("MUST Campus Academic Resource Sharing Platform")
 r.font.size = Pt(16)
 r.font.bold = True
 
 doc.add_paragraph()
 info = [
-    ("Project Title:", "Campus Academic Resource Sharing Platform Development"),
+    ("Project Title:", "MUST Campus Academic Resource Sharing Platform Development"),
     ("Document Version:", "1.0"),
     ("Prepared by:", "Lian Yuxiang (1230020693) / Yu Kaijie (1230020426)"),
     ("Team Members:", "Lian Yuxiang 1230020693  |  Yu Kaijie 1230020426  |  Chen Hanzhong 1230032209"),
@@ -168,7 +168,7 @@ doc.add_page_break()
 # ===================== SECTION 1 =====================
 heading1(doc, "1. Introduction")
 heading2(doc, "1.1 Purpose")
-body(doc, "This System Design Document (SDD) translates the requirements defined in the Requirements Analysis Document (RAD v1.0) into a concrete architectural and component-level design for the Campus Academic Resource Sharing Platform. It serves as the authoritative guide for prototype development, database implementation, and testing, following ISO 12207 software lifecycle standards.")
+body(doc, "This System Design Document (SDD) translates the requirements defined in the Requirements Analysis Document (RAD v1.0) into a concrete architectural and component-level design for the MUST Campus Academic Resource Sharing Platform. It serves as the authoritative guide for prototype development, database implementation, and testing, following ISO 12207 software lifecycle standards.")
 
 heading2(doc, "1.2 Design Principles")
 bullet(doc, "Separation of Concerns: Presentation, business logic, and data layers are strictly separated.")
@@ -458,8 +458,8 @@ UI -> PointsEngine : getBalance(userId)
 PointsEngine --> UI : balance = 75
 UI --> Student : show balance + redemption options
 
-Student -> UI : select "50 pts → 10 downloads"
-UI --> Student : show confirmation dialog (cost: 50 pts, benefit: 10 downloads)
+Student -> UI : select "50 pts → 100 downloads"
+UI --> Student : show confirmation dialog (cost: 50 pts, benefit: 100 downloads)
 Student -> UI : confirm redemption
 
 UI -> RedemptionModule : redeem(userId, DOWNLOAD_CREDIT_10)
@@ -469,10 +469,10 @@ PointsEngine --> RedemptionModule : balance = 75
 alt balance >= 50
   RedemptionModule -> PointsEngine : deductPoints(userId, 50, REDEEM_DOWNLOAD_CREDIT)
   PointsEngine -> PointRecordDAO : record(userId, -50, REDEEM_DOWNLOAD_CREDIT)
-  PointsEngine -> PointsEngine : updateDownloadCredits(userId, +10)
-  PointsEngine --> RedemptionModule : success (newBalance=25, newCredits=10)
+  PointsEngine -> PointsEngine : updateDownloadCredits(userId, +100)
+  PointsEngine --> RedemptionModule : success (newBalance=25, newCredits=100)
   RedemptionModule --> UI : success
-  UI --> Student : "Redemption successful! Balance: 25 pts, Download Credits: 10"
+  UI --> Student : "Redemption successful! Balance: 25 pts, Download Credits: 100"
 else balance < 50 (race condition guard)
   RedemptionModule --> UI : insufficient balance
   UI --> Student : show error
@@ -590,7 +590,7 @@ add_table(doc, db_headers, db_rows, [1.5, 2.1, 2.5, 0.9])
 
 heading2(doc, "8.2 Complete SQL Schema")
 sql_schema = """-- ================================================================
--- Campus Academic Resource Sharing Platform
+-- MUST Campus Academic Resource Sharing Platform
 -- MySQL 8.0 Database Schema  |  Version 1.0  |  May 2, 2026
 -- ================================================================
 

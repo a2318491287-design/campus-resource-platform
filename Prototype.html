@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>校园学术资源共享平台</title>
+<title>MUST Campus Academic Resource Sharing Platform · 校园学术资源共享平台</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1054,7 +1054,8 @@ body {
   <div class="auth-card">
     <div class="auth-card-head">
       <div class="brand-mark">学</div>
-      <h2>校园学术资源共享平台</h2>
+      <h2>MUST Campus Academic Resource Sharing Platform</h2>
+      <div style="margin-top:6px; font-size:13px; opacity:.6">校园学术资源共享平台</div>
     </div>
     <div class="subtitle">登录或注册以使用平台</div>
 
@@ -1100,8 +1101,8 @@ body {
       <a class="brand">
         <div class="brand-mark">学</div>
         <div class="brand-text">
-          校园资源共享
-          <small>Campus Resource Platform</small>
+          MUST Resource Hub
+          <small>校园学术资源共享平台</small>
         </div>
       </a>
     </div>
@@ -1389,8 +1390,8 @@ body {
           <div class="redeem-card" onclick="redeem(50, 'DOWNLOAD_CREDIT_10')">
             <div class="redeem-card-icon"><i data-lucide="download"></i></div>
             <div class="redeem-card-info">
-              <div class="redeem-card-title">10 次额外下载次数</div>
-              <div class="redeem-card-desc">额外解锁 10 次免费下载，永久有效</div>
+              <div class="redeem-card-title">100 次额外下载次数</div>
+              <div class="redeem-card-desc">额外解锁 100 次免费下载，永久有效</div>
             </div>
             <div class="redeem-card-cost">50 pts</div>
           </div>
@@ -1987,7 +1988,7 @@ async function redeem(cost, type) {
     showModal("积分不足", `本次兑换需要 ${cost} 积分，但你当前只有 ${currentUser.points_balance} 积分。`, null);
     return;
   }
-  const desc = type === "DOWNLOAD_CREDIT_10" ? "10 次额外下载次数" : "资源置顶 7 天";
+  const desc = type === "DOWNLOAD_CREDIT_10" ? "100 次额外下载次数" : "资源置顶 7 天";
   showModal("确认兑换",
     `本次兑换将消耗 ${cost} 积分获得「${desc}」。\n当前余额：${currentUser.points_balance}，兑换后：${currentUser.points_balance - cost}。`,
     async () => {

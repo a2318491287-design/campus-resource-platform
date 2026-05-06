@@ -1,4 +1,4 @@
-# Campus Academic Resource Sharing Platform
+# MUST Campus Academic Resource Sharing Platform
 
 > 校园学术资源共享平台 — 真实部署的全栈系统  
 > System Analysis and Design · Group F · Spring 2026  
@@ -116,8 +116,8 @@ A new feature not present on any existing campus resource platform.
 ## 🚀 Run Locally
 
 ```bash
-git clone https://github.com/a2318491287-design/campus-resource-platform.git
-cd campus-resource-platform/backend
+git clone https://github.com/a2318491287-design/must-campus-resource-platform.git
+cd must-campus-resource-platform/backend
 
 # Install dependencies (Python 3.11+)
 python3.11 -m venv .venv

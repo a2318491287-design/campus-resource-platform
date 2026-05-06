@@ -1,5 +1,5 @@
 """
-Configuration loader for Campus Resource Platform backend.
+Configuration loader for MUST Campus Academic Resource Sharing Platform backend.
 """
 import os
 from pydantic_settings import BaseSettings

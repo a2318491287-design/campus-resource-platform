@@ -195,7 +195,7 @@ add_text(s, Inches(1.1), Inches(3.6), Inches(11), Inches(1.4),
 
 # Subtitle
 add_text(s, Inches(1.1), Inches(5.0), Inches(11), Inches(0.5),
-         "Campus Academic Resource Sharing Platform",
+         "MUST Campus Academic Resource Sharing Platform",
          size=18, color=INK_SOFT, italic=True)
 
 # Tagline divider
@@ -412,7 +412,7 @@ add_text(s, right_x + Inches(0.4), right_y + Inches(0.95),
 items2 = [
     "新用户注册即送 100 积分",
     "上传 +10 · 被下载 +2 · 被好评 +1",
-    "50 分换 10 次下载 / 100 分置顶 7 天",
+    "50 分换 100 次下载 / 100 分置顶 7 天",
 ]
 for i, t in enumerate(items2):
     add_oval(s, right_x + Inches(0.4), right_y + Inches(2.0 + i*0.4) + Inches(0.07),
@@ -853,7 +853,7 @@ add_text(s, Inches(1.0), gh_y, Inches(2), Inches(0.55),
          "⌥ CODE", size=9, color=MUSTARD, bold=True, tracking=300,
          anchor=MSO_ANCHOR.MIDDLE, font=F_MONO)
 add_text(s, Inches(2.2), gh_y, Inches(10.5), Inches(0.55),
-         "github.com/a2318491287-design/campus-resource-platform",
+         "github.com/a2318491287-design/must-campus-resource-platform",
          size=12, color=WHITE, font=F_MONO, anchor=MSO_ANCHOR.MIDDLE)
 
 # Demo account bar

@@ -119,13 +119,13 @@ r.font.color.rgb = RGBColor(0x1F, 0x49, 0x7D)
 doc.add_paragraph()
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p.add_run("Campus Academic Resource Sharing Platform")
+r = p.add_run("MUST Campus Academic Resource Sharing Platform")
 r.font.size = Pt(16)
 r.font.bold = True
 
 doc.add_paragraph()
 info = [
-    ("Project Title:", "Campus Academic Resource Sharing Platform Development"),
+    ("Project Title:", "MUST Campus Academic Resource Sharing Platform Development"),
     ("Document Version:", "1.0"),
     ("Prepared by:", "Lian Yuxiang (1230020693)"),
     ("Team Members:", "Lian Yuxiang 1230020693  |  Yu Kaijie 1230020426  |  Chen Hanzhong 1230032209"),
@@ -170,10 +170,10 @@ doc.add_page_break()
 # ===================== SECTION 1: INTRODUCTION =====================
 heading1(doc, "1. Introduction")
 heading2(doc, "1.1 Purpose of This Document")
-body(doc, "This Requirements Analysis Document (RAD) defines the complete set of functional and non-functional requirements for the Campus Academic Resource Sharing Platform. It serves as the authoritative specification for the system design, prototype development, and testing phases, following ISO 29148 requirements engineering standards.")
+body(doc, "This Requirements Analysis Document (RAD) defines the complete set of functional and non-functional requirements for the MUST Campus Academic Resource Sharing Platform. It serves as the authoritative specification for the system design, prototype development, and testing phases, following ISO 29148 requirements engineering standards.")
 
 heading2(doc, "1.2 Project Overview")
-body(doc, "The Campus Academic Resource Sharing Platform is a mobile/web application designed to address the fragmented academic resource ecosystem within university campuses. The project targets two core improvements:")
+body(doc, "The MUST Campus Academic Resource Sharing Platform is a mobile/web application designed to address the fragmented academic resource ecosystem within university campuses. The project targets two core improvements:")
 bullet(doc, "Feature Improvement: An optimized precise retrieval module that enables students to locate academic materials (lecture notes, past papers, assignments) with significantly higher efficiency than current search approaches.")
 bullet(doc, "New Feature: A points-based incentive system that motivates students to contribute high-quality resources by rewarding sharing behaviors with redeemable points.")
 
@@ -479,7 +479,7 @@ rtm_rows = [
     ["FR-11", "Award 10 pts on upload", "No incentive to share resources", "UC-05", "Points Engine", "TC-04"],
     ["FR-12", "Award 2 pts per download", "Reward continued contribution", "UC-04", "Points Engine", "TC-05"],
     ["FR-14", "Deduct 5 pts per download", "Balanced economy sustainability", "UC-04", "Points Engine", "TC-06"],
-    ["FR-15", "Redeem 50 pts → 10 downloads", "Tangible redemption value", "UC-08", "Redemption Module", "TC-07"],
+    ["FR-15", "Redeem 50 pts → 100 downloads", "Tangible redemption value", "UC-08", "Redemption Module", "TC-07"],
     ["FR-17", "Monthly leaderboard", "Social motivation", "UC-09", "Leaderboard Component", "TC-08"],
     ["FR-20", "File upload (PDF/DOCX/PPTX)", "Core upload capability", "UC-05", "File Upload Module", "TC-09"],
     ["FR-23", "1-5 star rating + comment", "Community quality signaling", "UC-06", "Rating Module", "TC-10"],

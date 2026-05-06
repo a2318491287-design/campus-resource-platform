@@ -1,5 +1,5 @@
 """
-Campus Academic Resource Sharing Platform — Backend API
+MUST Campus Academic Resource Sharing Platform — Backend API
 FastAPI entry point.
 
 Run locally:
@@ -23,7 +23,7 @@ Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(
-    title="Campus Resource Platform API",
+    title="MUST Campus Academic Resource Sharing Platform API",
     description="校园学术资源共享平台后端 API · System Analysis and Design Project",
     version="1.0.0",
 )
@@ -50,7 +50,7 @@ app.include_router(admin.router)
 @app.get("/")
 def root():
     return {
-        "service": "Campus Resource Platform API",
+        "service": "MUST Campus Academic Resource Sharing Platform API",
         "version": "1.0.0",
         "docs": "/docs",
         "health": "/health",
